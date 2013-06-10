@@ -1,0 +1,2 @@
+require './feedo'
+run Feedo
