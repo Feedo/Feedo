@@ -34,7 +34,10 @@ body {
     cursor: pointer;
 }
 
-#feed-view > li {
+#feed-view {
+    padding-right: 6px;
+}
+.feed-item {
     padding: 15px;
     margin-bottom: 10px;
     
@@ -48,10 +51,22 @@ body {
     -moz-transition: background-color 0.25s, box-shadow 0.25s;
     -o-transition: background-color 0.25s, box-shadow 0.25s;
 }
-#feed-view > li:last-child {
+.feed-item:last-child {
     margin-bottom: 0;
 }
-#feed-view > li:hover {
+.feed-item:hover {
     background-color: rgba(250, 250, 250, 1.0);
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+.feed-item .feed-title {
+    font-weight: bold;
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+.feed-item .feed-abstract {
+    font-style: italic;
+    font-size: small;
+    
+    padding-bottom: 2px;
+    border-bottom: 1px dashed black;
 }

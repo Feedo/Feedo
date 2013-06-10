@@ -47,17 +47,23 @@
             </div>
         </div>
     </div>
-  
-  <script type="text/template" id="feed-menu-item-template">
-    <li class="feed-menu-item">
-      <%= title %>
-    </li>
-  </script>
-  <script type="text/template" id="feed-item-template">
-    <%= title %><br />
-    <%= summary %><br />
-    <%= content %>
-  </script>
+    
+    <script type="text/template" id="feed-menu-item-template">
+        <li class="feed-menu-item">
+            <%= title %>
+        </li>
+    </script>
+    <script type="text/template" id="feed-item-template">
+        <li class="feed-item">
+            <div class="feed-title">
+                <%= title %>
+            </div>
+            <div class="feed-abstract">
+                <%= summary %>
+            </div>
+            <%= content %>
+        </li>
+    </script>
   
   <script src="js/models.js"></script>
   <script src="js/views.js"></script>
