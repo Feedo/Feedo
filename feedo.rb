@@ -61,13 +61,12 @@ class Feedo < Sinatra::Base
   end
   
   post '/feeds' do
-    url = URI.unescape(params[:url])
-    if(url.empty?) then return "empty" end
-    exists = Feed.where(:file_url => url).exists?
+    url = JSON.parse(request.body.read)["file_url"]
+    puts url
     
-    if exists then
-      return "exists"
-    end
+    return 400 if url.nil? or url.empty? 
+        
+    return 409 if Feed.where(:file_url => url).exists?
     
     feed = Feed.new
     feed.file_url = url

@@ -11,3 +11,5 @@ gem "rufus-scheduler"
 gem 'feedzirra'
 
 gem 'json'
+
+gem 'thin'

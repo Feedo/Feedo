@@ -59,6 +59,7 @@ var FeedView = Backbone.View.extend({
   
   render: function() {
     var $el = $(this.$el);
+    $el.html("");
     this.model.get("items").each(function(item) {      
       
       var itemView;

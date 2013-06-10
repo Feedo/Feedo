@@ -5,7 +5,8 @@ var Feed = Backbone.RelationalModel.extend({
     relatedModel: 'FeedItem',
     collectionType: 'FeedItemCollection',
     collectionOptions: function(instance){ return {id: instance.id}; }
-  }]
+  }],
+  url: "/feeds"
 });
 
 var FeedCollection = Backbone.Collection.extend({
