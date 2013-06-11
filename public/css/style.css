@@ -12,6 +12,9 @@ body {
     background-color: rgba(235, 235, 235, 0.5);
 }
 
+/*
+ * Content
+ * */
 .content-view {
     background-color: rgb(225, 225, 225); /* really needed? */
 }

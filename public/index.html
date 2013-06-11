@@ -35,12 +35,17 @@
             
             <div class="row-fluid content-view">
                 
-                <div class="span4">
+                <div class="span3">
                     <h4>Your feeds:</h4>
                     <ul id="feed-menu" class="unstyled"></ul>
                 </div>
                 
-                <div class="span8">
+                <div class="span3">
+                    <h4>Feed items:</h4>
+                    <ul id="feed-menu-view"></ul>
+                </div>
+                
+                <div class="span6">
                     <h4>Feed items:</h4>
                     <ul id="feed-view" class="unstyled"></ul>
                 </div>
@@ -57,18 +62,18 @@
         </li>
     </script>
     <script type="text/template" id="feed-item-menu-item-template">
-        <a href="#"><%= title %></a>
+        <a href="#">
+            <%= title %>
+        </a>
     </script>
     <script type="text/template" id="feed-item-template">
-        <li class="feed-item">
-            <div class="feed-title">
-                <%= title %>
-            </div>
-            <div class="feed-abstract">
-                <%= summary %>
-            </div>
-            <%= content %>
-        </li>
+        <div class="feed-title">
+            <%= title %>
+        </div>
+        <div class="feed-abstract">
+            <%= summary %>
+        </div>
+        <%= content %>
     </script>
   
   <script src="js/models.js"></script>
