@@ -48,6 +48,9 @@ body {
     
     text-align: center;
 }
+.menu-item a {
+    text-decoration: none;
+}
 
 #feed-view {
     padding-right: 6px;
