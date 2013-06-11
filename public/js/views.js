@@ -42,42 +42,75 @@ var FeedMenuItemView = Backbone.View.extend({
   
   showFeedItems: function() {
     var self = this;
-    $("#feed-view").html(new FeedView({model: self.model}).render().el);
+    new FeedItemMenuView({collection: self.model.get("items")}).render();
+    $("#feed-view").html("");
     return false;
   }
   
 });
 
-var FeedView = Backbone.View.extend({
-  el: $("#feed-view"),
+var FeedItemMenuView = Backbone.View.extend({
+  el: $("#feed-menu-view"),
   
   initialize: function() {
-    this.model.get("items").on('add', this.render, this);
-    this.model.get("items").on('destroy', this.remove, this);
-    this.model.get("items").fetch();
+    this.collection.on('add', this.render, this);
+    this.collection.on('destroy', this.remove, this);
+    this.collection.fetch();
   },
   
   render: function() {
     var $el = $(this.$el);
     $el.html("");
-    this.model.get("items").each(function(item) {      
+    this.collection.each(function(item) {      
       
       var itemView;
-      itemView = new FeedItemView({model: item});
+      itemView = new FeedItemMenuItemView({model: item});
       $el.append(itemView.render().el);
     });
-    return this;
     
+    return this;
+  }
+});
+
+var FeedItemMenuItemView = Backbone.View.extend({
+  template: _.template($("#feed-item-menu-item-template").html()),
+  tagName: 'li',
+  
+  events: {
+    'click': 'showFeedItem'
+  },
+  
+  initialize: function() {
+    this.model.on("change", this.render, this);
+    this.model.on("destroy", this.remove, this);
+  },
+  
+  render: function() {
+    var $el = $(this.$el);
+    $el.html(this.template(this.model.toJSON()));
+    
+    return this;
+  },
+  
+  showFeedItem: function() {
+    $("#feed-view").html(new FeedItemView({model: this.model}).render().el);
+    return false;
   }
 });
 
 var FeedItemView = Backbone.View.extend({
   template: _.template($("#feed-item-template").html()),
-  tagName: 'li',
+  $el: $("#feed-view"),
+  
+  initialize: function() {
+    this.model.on("change", this.render, this);
+    this.model.on("destroy", this.remove, this);
+  },
   
   render: function() {
-    var $el = $(this.$el);
+    var $el = $(this.el);
     $el.html(this.template(this.model.toJSON()));
+    
     return this;
   }
 });
@@ -86,9 +119,9 @@ var AppView = Backbone.View.extend({
   el: $("#feedoapp"),
 
   initialize: function() {
-    Feeds.fetch();
     
     var FeedMenu = new FeedMenuView({model: Feeds});
+    Feeds.fetch();
     
   }
 });
