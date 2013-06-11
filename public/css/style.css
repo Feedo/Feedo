@@ -17,6 +17,7 @@ body {
  * */
 .content-view {
     background-color: rgb(225, 225, 225); /* really needed? */
+    border-radius: 5px;
 }
 .menu-item {
     padding: 3px;
