@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  
+    
     <div id="feedoapp" class="container-fluid">
         <div class="grid">
             <!-- Header -->
@@ -51,8 +51,13 @@
     
     <script type="text/template" id="feed-menu-item-template">
         <li class="feed-menu-item">
-            <%= title %>
+            <a href="#">
+                <%= title %>
+            </a>
         </li>
+    </script>
+    <script type="text/template" id="feed-item-menu-item-template">
+        <a href="#"><%= title %></a>
     </script>
     <script type="text/template" id="feed-item-template">
         <li class="feed-item">

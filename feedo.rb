@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/activerecord'
+require "sinatra/config_file"
 
 require 'rufus/scheduler'
 
@@ -14,18 +15,39 @@ end
 
 class Feedo < Sinatra::Base
   register Sinatra::ActiveRecordExtension
+  register Sinatra::ConfigFile
   
-  ActiveRecord::Base.include_root_in_json = false
+  config_file 'config/feedo.yml'
   
-  SCHEDULER = Rufus::Scheduler.start_new
   
-  SCHEDULER.every '1m' do
-    ActiveRecord::Base.verify_active_connections!
-    update_feeds
+  def self.logger
+    @@logger
+  end
+  
+  def self.scheduler
+    @@scheduler
+  end
+  
+  configure do
+    @@scheduler = Rufus::Scheduler.start_new
+    @@logger = Logger.new(STDOUT)
+  
+    if settings.use_internal_scheduler then
+      @@scheduler.every settings.scheduler_interval, :allow_overlapping => false do
+        ActiveRecord::Base.verify_active_connections!
+        update_feeds
+      end
+    end
+  
+    ActiveRecord::Base.include_root_in_json = false
+    
+    @@scheduler.in "10s" do
+      update_feeds
+    end
   end
   
   def self.update_feeds
-    puts "Starting to check the Feeds..."
+    @@logger.info "Starting to check the Feeds..."
     
     Feed.all.each do |feed|
       feed.update_feed
@@ -33,7 +55,7 @@ class Feedo < Sinatra::Base
     end
     ActiveRecord::Base.connection.close
     
-    puts "Finished checking Feeds!"
+    @@logger.info "Finished checking Feeds!"
   end
   
   get '/' do

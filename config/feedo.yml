@@ -1,0 +1,2 @@
+use_internal_scheduler: true
+scheduler_interval: "30m"
