@@ -101,6 +101,7 @@ var FeedItemMenuItemView = Backbone.View.extend({
 var FeedItemView = Backbone.View.extend({
   template: _.template($("#feed-item-template").html()),
   $el: $("#feed-view"),
+  className: "feed-item",
   
   initialize: function() {
     this.model.on("change", this.render, this);
