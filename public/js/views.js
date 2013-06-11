@@ -23,6 +23,7 @@ var FeedMenuView = Backbone.View.extend({
 var FeedMenuItemView = Backbone.View.extend({
   template: _.template($("#feed-menu-item-template").html()),
   tagName: 'li',
+    className: 'feed-menu-item',
  
   events: {
     'click': 'showFeedItems'
@@ -75,6 +76,7 @@ var FeedItemMenuView = Backbone.View.extend({
 var FeedItemMenuItemView = Backbone.View.extend({
   template: _.template($("#feed-item-menu-item-template").html()),
   tagName: 'li',
+    className: "feed-item-menu-item",
   
   events: {
     'click': 'showFeedItem'
