@@ -1,91 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Feedo</title>
+	<title>Feedo</title>
   <script src="js/libs/jquery-1.10.1.js"></script>
   <script src="js/libs/json2.js"></script>
   <script src="js/libs/underscore.js"></script>
   <script src="js/libs/backbone.js"></script>
   <script src="js/libs/backbone-relational.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+  
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-<body>
+	<body>
+	
+		<div id="feedoapp" class="container-fluid">
+			<div class="grid content-view">
+				<!-- Header -->
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="navbar">
+							<div class="navbar-inner">
+                            
+								<span class="brand">
+									Feedo
+								</span>
+                            
+								<div class="controls pull-right">
+									<a id="btn-add-feed" class="btn" title="Add feed">
+										+
+									</a>
+								</div>
+                            
+							</div>
+						</div>
+					</div>
+				</div>  
+			 
+				<div class="row-fluid">
+							
+					<div class="span3">
+						<ul id="feed-menu" class="unstyled"></ul>
+					</div>
+                
+					<div class="span3">
+						<ul id="feed-menu-view" class="unstyled"></ul>
+					</div>
+                
+					<div class="span6">
+						<div id="feed-view"></div>
+					</div>
+                
+				</div>
+			</div>
+		</div>
     
-    <div id="feedoapp" class="container-fluid">
-        <div class="grid content-view">
-            <!-- Header -->
-            <div class="row-fluid">
-                <div class="span12">
-                    <div class="navbar">
-                        <div class="navbar-inner">
-                            
-                            <span class="brand">
-                                Feedo
-                            </span>
-                            
-                            <div class="controls pull-right">
-                                <a id="btn-add-feed" class="btn" title="Add feed">
-                                    +
-                                </a>
-                            </div>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row-fluid">
-                
-                <div class="span3">
-                    <ul id="feed-menu" class="unstyled"></ul>
-                </div>
-                
-                <div class="span3">
-                    <ul id="feed-menu-view" class="unstyled"></ul>
-                </div>
-                
-                <div class="span6">
-                    <div id="feed-view"></div>
-                </div>
-                
-            </div>
-        </div>
-    </div>
-    
-    <script type="text/template" id="feed-menu-item-template">
-        <div class="menu-item">
-            <div class="menu-item-inner">
-                <a href="#">
-                    <%= title %>
-                </a>
-            </div>
-        </div>
-    </script>
-    <script type="text/template" id="feed-item-menu-item-template">
-        <div class="menu-item">
-            <div class="menu-item-inner">
-                <a href="#">
-                    <%= title %>
-                </a>
-            </div>
-        </div>
-    </script>
-    <script type="text/template" id="feed-item-template">
-        <div class="feed-title">
-            <%= title %>
-        </div>
-        <div class="feed-abstract">
-            <%= summary %>
-        </div>
-        <%= content %>
-    </script>
+		<script type="text/template" id="feed-menu-item-template">
+			<div class="menu-item">
+				<div class="menu-item-inner">
+					<a href="#">
+						<%= title %>
+					</a>
+				</div>
+			</div>
+		</script>
+		<script type="text/template" id="feed-item-menu-item-template">
+			<div class="menu-item">
+				<div class="menu-item-inner">
+					<a href="#">
+						<%= title %>
+					</a>
+				</div>
+			</div>
+		</script>
+		<script type="text/template" id="feed-item-template">
+			<div class="feed-title">
+				<%= title %>
+			</div>
+			<div class="feed-abstract">
+				<%= summary %>
+			</div>
+		
+			<%= content %>
+		</script>
   
-  <script src="js/models.js"></script>
-  <script src="js/views.js"></script>
-</body>
+		<script src="js/models.js"></script>
+		<script src="js/views.js"></script>
+	</body>
 
 </html>
