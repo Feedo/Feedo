@@ -5,7 +5,10 @@ gem 'sinatra-contrib'
 
 gem "sinatra-activerecord"
 
-gem "sqlite3"
+group :development do
+  gem "sqlite3"
+end
+
 gem "rake"
 
 gem "rufus-scheduler"
