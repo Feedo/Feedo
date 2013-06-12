@@ -3,14 +3,16 @@ var FeedMenuView = Backbone.View.extend({
   el: '#feed-menu',
 
   initialize: function() {
-    this.listenTo(this.model, 'add', this.render);
+    this.listenTo(this.collection, 'add', this.render);
   },
 
   render: function() {    
+    this.collection.sort();
+    
     var $el = $(this.el),
        self = this;
     $el.html("");
-    this.model.each(function(feed) {
+    this.collection.each(function(feed) {
       var item;
       item = new FeedMenuItemView({ model: feed });
       $el.append(item.render().el);
@@ -23,7 +25,7 @@ var FeedMenuView = Backbone.View.extend({
 var FeedMenuItemView = Backbone.View.extend({
   template: _.template($("#feed-menu-item-template").html()),
   tagName: 'li',
-    className: 'feed-menu-item',
+  className: 'feed-menu-item',
  
   events: {
     'click': 'showFeedItems'
@@ -60,6 +62,8 @@ var FeedItemMenuView = Backbone.View.extend({
   },
   
   render: function() {
+    this.collection.sort();
+    
     var $el = $(this.$el);
     $el.html("");
     this.collection.each(function(item) {      
@@ -96,6 +100,7 @@ var FeedItemMenuItemView = Backbone.View.extend({
   
   showFeedItem: function() {
     $("#feed-view").html(new FeedItemView({model: this.model}).render().el);
+    this.model.set("read", true).save();
     return false;
   }
 });
@@ -123,7 +128,7 @@ var AppView = Backbone.View.extend({
 
   initialize: function() {
     
-    var FeedMenu = new FeedMenuView({model: Feeds});
+    var FeedMenu = new FeedMenuView({collection: Feeds});
     Feeds.fetch();
     
   }

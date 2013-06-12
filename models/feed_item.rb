@@ -17,7 +17,9 @@ class FeedItem < ActiveRecord::Base
     target.published = feedzirra_entry.published
     target.image = feedzirra_entry.image unless !feedzirra_entry.respond_to?('image')
     target.item_guid = feedzirra_entry.entry_id.to_s
-
+    
+    target.read = false
+    
     target.save 
   end
 end
