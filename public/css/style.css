@@ -38,7 +38,7 @@ body {
     cursor: pointer;
 }
 .menu-item-inner {
-    padding: 3px;
+    padding: 5px;
     border: 1px solid #d7d7d7;
     border-radius: 3px;
     background-color: rgb(235, 235, 235);
@@ -46,11 +46,12 @@ body {
     -webkit-transition: background-color 0.25s, box-shadow 0.25s;
     -moz-transition: background-color 0.25s, box-shadow 0.25s;
     -o-transition: background-color 0.25s, box-shadow 0.25s;
-    
-    text-align: center;
 }
 .menu-item a {
     text-decoration: none;
+}
+.feed-item-menu-item .menu-item-inner {
+	text-align: left;
 }
 
 #feed-view {
