@@ -6,7 +6,7 @@ class AddFeedItems < ActiveRecord::Migration
       t.text :content
       t.text :summary
       t.string :image
-      t.date :published
+      t.datetime :published
       t.string :link
       t.string :author
       t.string :item_guid

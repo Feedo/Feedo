@@ -1,5 +1,8 @@
 class Feed < ActiveRecord::Base
+  attr_accessible :file_url, :title, :link, :description
   has_many :feed_items
+  
+  validates :file_url, :presence => true
   
   def update_feed      
     Feedo.logger.info "Checking "+self.file_url+"..."

@@ -1,4 +1,5 @@
 class FeedItem < ActiveRecord::Base
+  attr_accessible :title, :content, :summary, :image, :published, :link, :author, :item_guid
   belongs_to :feed
   
   def self.insert_or_update(feed, feedzirra_entry)
@@ -17,7 +18,9 @@ class FeedItem < ActiveRecord::Base
     target.published = feedzirra_entry.published
     target.image = feedzirra_entry.image unless !feedzirra_entry.respond_to?('image')
     target.item_guid = feedzirra_entry.entry_id.to_s
-
+    
+    target.read = false
+    
     target.save 
   end
 end

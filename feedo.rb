@@ -1,6 +1,6 @@
 require 'sinatra/base'
 require 'sinatra/activerecord'
-require "sinatra/config_file"
+require 'sinatra/config_file'
 
 require 'rufus/scheduler'
 
@@ -62,12 +62,6 @@ class Feedo < Sinatra::Base
     File.read(File.join('public', 'index.html'))
   end
   
-  delete '/feeds/:id' do
-    Feed.delete(params[:id])
-    
-    redirect '/'
-  end
-  
   get '/feeds/:id' do
     feed = Feed.find(params[:id])
     
@@ -84,7 +78,6 @@ class Feedo < Sinatra::Base
   
   post '/feeds' do
     url = JSON.parse(request.body.read)["file_url"]
-    puts url
     
     return 400 if url.nil? or url.empty? 
         
@@ -106,10 +99,37 @@ class Feedo < Sinatra::Base
     feed.feed_items.to_json
   end
   
+  get '/feeds/:feed_id/items/:item_id' do
+    feed_item = FeedItem.find(params[:item_id])
+    puts feed_item.published
+    content_type :json
+    feed_item.to_json
+  end
+  
+  put '/feeds/:feed_id/items/:item_id' do
+    data = JSON.parse(request.body.read)
+    
+    feed_item = FeedItem.find(params[:item_id])
+    
+    return 404 if feed_item.nil?
+    
+    feed_item.read = data["read"]
+    
+    feed_item.save!
+    feed_item.to_json
+  end
+  
   get '/update_feeds' do
     Feedo::update_feeds
     "updated"
   end
+  
+  delete '/feeds/:id' do
+    Feed.delete(params[:id])
+    
+    redirect '/'
+  end
+ 
   
   not_found do
     erb :'404'
