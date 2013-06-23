@@ -1,3 +1,6 @@
+/*
+ * Main Feed Views
+ * */
 var FeedMenuView = Backbone.View.extend({
   tagName: "ul",
   el: '#feed-menu',
@@ -131,7 +134,33 @@ var AppView = Backbone.View.extend({
     var FeedMenu = new FeedMenuView({collection: Feeds});
     Feeds.fetch();
     
+  },
+  
+  events: {
+    /* Add Feed Modal */
+    "keyup #modal-add-feed #input-add-feed": "checkAddFeedInput",
+    "keydown #modal-add-feed #input-add-feed": "checkAddFeedInput",
+    "click #modal-add-feed .btn-primary": "addFeed"
+  },
+  
+  /* Add Feed Modal */
+  checkAddFeedInput: function() {
+    var url = $("#input-add-feed").val();
+    
+    if ( url ) {
+      $("#modal-add-feed .btn-primary").removeAttr('disabled');
+    } else {
+      $("#modal-add-feed .btn-primary").attr('disabled', 'disabled');
+    }
+  },
+  addFeed: function() {
+    var url = $("#input-add-feed").val();
+    
+    if ( url ) {
+      alert(url);
+    }
   }
+  
 });
 
 var App = new AppView;

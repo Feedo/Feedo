@@ -86,3 +86,45 @@ body {
     padding-bottom: 2px;
     border-bottom: 1px dashed black;
 }
+
+/*
+ * Animation
+ * */
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-o-keyframes rotation {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(360deg);
+  }
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotation 2s linear infinite;
+  -moz-animation: rotation 2s linear infinite;
+  -o-animation: rotation 2s linear infinite;
+  animation: rotation 2s linear infinite;
+}
