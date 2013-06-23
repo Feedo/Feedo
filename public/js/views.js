@@ -157,7 +157,22 @@ var AppView = Backbone.View.extend({
     var url = $("#input-add-feed").val();
     
     if ( url ) {
-      alert(url);
+      
+      // create feed
+      var feed = new Feed({
+        file_url: url
+      });
+      $("#modal-add-feed input, #modal-add-feed .btn").attr('disabled', 'disabled');
+      // sync to server
+      feed.save({
+        success: function(model, response, options) {
+          $("#modal-add-feed").modal('hide');
+        },
+        error: function(model, xhr, options) {
+          alert("Something went wrong adding the feed.");
+        }
+      });
+      
     }
   }
   
