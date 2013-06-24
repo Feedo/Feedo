@@ -1,30 +1,43 @@
 /*
  * Main Feed Views
  * */
+/* Feed List Container */
 var FeedMenuView = Backbone.View.extend({
   tagName: "ul",
+  // our container div#id
   el: '#feed-menu',
 
   initialize: function() {
+    // add items when they are
     this.listenTo(this.collection, 'add', this.render);
+    // listen to changes
+    this.listenTo(this.collection, 'change', this.render);
   },
 
-  render: function() {    
-    this.collection.sort();
+  render: function() {
+    // save for later usage
+    var self = this;
     
-    var $el = $(this.el),
-       self = this;
-    $el.html("");
-    this.collection.each(function(feed) {
-      var item;
-      item = new FeedMenuItemView({ model: feed });
-      $el.append(item.render().el);
+    // sort the feeds
+    self.collection.sort();
+  
+    // remove all prior content
+    self.$el.html("");
+    // add each feed
+    self.collection.each(function(feed) {
+      // new feed view object, based on feed data
+      var item = new FeedMenuItemView({
+        model: feed
+      });
+      
+      // add to list
+      self.$el.append(item.render().el);
     });
     
-    return this;
+    return self;
   }
 });
-
+/* Feed List Item */
 var FeedMenuItemView = Backbone.View.extend({
   template: _.template($("#feed-menu-item-template").html()),
   tagName: 'li',
@@ -43,6 +56,7 @@ var FeedMenuItemView = Backbone.View.extend({
     var $el = $(this.$el);
     $el.data('feedId', this.model.get('id'));
     $el.html(this.template(this.model.toJSON()));
+    
     return this;
   },
   
