@@ -39,8 +39,10 @@ var FeedMenuView = Backbone.View.extend({
 });
 /* Feed List Item */
 var FeedMenuItemView = Backbone.View.extend({
+  // template to use
   template: _.template($("#feed-menu-item-template").html()),
   tagName: 'li',
+  // class to use
   className: 'feed-menu-item',
   
   // attach event handler
@@ -115,31 +117,42 @@ var FeedItemMenuView = Backbone.View.extend({
     return this;
   }
 });
-
+/* Feed's item list ITEM */
 var FeedItemMenuItemView = Backbone.View.extend({
+  // template to use
   template: _.template($("#feed-item-menu-item-template").html()),
   tagName: 'li',
-    className: "feed-item-menu-item",
+  // class to use
+  className: "feed-item-menu-item",
   
+  // attach event handler
   events: {
     'click': 'showFeedItem'
   },
   
   initialize: function() {
+    // listen for changes on model
     this.model.on("change", this.render, this);
     this.model.on("destroy", this.remove, this);
   },
   
   render: function() {
-    var $el = $(this.$el);
-    $el.html(this.template(this.model.toJSON()));
+    // render the template
+    this.$el.html(this.template(this.model.toJSON()));
     
     return this;
   },
   
   showFeedItem: function() {
-    $("#feed-view").html(new FeedItemView({model: this.model}).render().el);
+    // create new FeedItemView based on model
+    var feedItemView = new FeedItemView({
+      model: this.model
+    });
+    // render it to the view
+    $("#feed-view").html(feedItemView.render().el);
+    // save read state
     this.model.set("read", true).save();
+    
     return false;
   }
 });
