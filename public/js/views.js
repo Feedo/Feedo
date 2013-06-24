@@ -127,7 +127,7 @@ var FeedItemMenuItemView = Backbone.View.extend({
   
   // attach event handler
   events: {
-    'click': 'showFeedItem'
+    'click': 'toggleVisibility'
   },
   
   initialize: function() {
@@ -139,39 +139,30 @@ var FeedItemMenuItemView = Backbone.View.extend({
   render: function() {
     // render the template
     this.$el.html(this.template(this.model.toJSON()));
+    this.$el.find('.feed-content').hide();
     
     return this;
   },
   
-  showFeedItem: function() {
-    // create new FeedItemView based on model
-    var feedItemView = new FeedItemView({
-      model: this.model
-    });
-    // render it to the view
-    $("#feed-view").html(feedItemView.render().el);
-    // save read state
-    this.model.set("read", true).save();
+  toggleVisibility: function() {
+    if ( !this.model.get("read") ) {
+      // save read state
+      this.model.set("read", true).save();
+    }
+    
+    if ( !this.$el.hasClass("open") ) {
+      this.$el.addClass("open");
+      this.$el.find('.feed-abstract').fadeOut('fast');
+      
+      this.$el.find('.feed-content').fadeIn();
+    } else {
+      this.$el.removeClass("open");
+      this.$el.find('.feed-abstract').fadeIn();
+      
+      this.$el.find('.feed-content').fadeOut('fast');
+    }
     
     return false;
-  }
-});
-
-var FeedItemView = Backbone.View.extend({
-  template: _.template($("#feed-item-template").html()),
-  $el: $("#feed-view"),
-  className: "feed-item",
-  
-  initialize: function() {
-    this.model.on("change", this.render, this);
-    this.model.on("destroy", this.remove, this);
-  },
-  
-  render: function() {
-    var $el = $(this.el);
-    $el.html(this.template(this.model.toJSON()));
-    
-    return this;
   }
 });
 

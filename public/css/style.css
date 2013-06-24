@@ -53,6 +53,9 @@ body {
 	text-align: left;
 }
 
+.feed-item-menu-item.open .menu-item-inner {
+  background-color: inherit;
+}
 #feed-view {
     padding-right: 6px;
 }

@@ -78,12 +78,8 @@
             <ul id="feed-menu" class="unstyled"></ul>
           </div>
                 
-          <div class="span3">
-            <ul id="feed-menu-view" class="unstyled"></ul>
-          </div>
-                
-          <div class="span6">
-            <div id="feed-view"></div>
+          <div class="span9">
+            <ul id="feed-menu-view" class="unstyled accordion"></ul>
           </div>
                 
         </div>
@@ -100,23 +96,25 @@
     </div>
     </script>
     <script type="text/template" id="feed-item-menu-item-template">
-    <div class="menu-item">
-    <div class="menu-item-inner">
-    <a href="#">
-    <%= published %>: <%= title %>
-    </a>
-    </div>
-    </div>
-    </script>
-    <script type="text/template" id="feed-item-template">
-    <div class="feed-title">
-    <%= title %>
-    </div>
-    <div class="feed-abstract">
-    <%= summary %>
-    </div>
-		
-    <%= content %>
+      <div class="menu-item">
+        <div class="menu-item-inner">
+          
+          <div class="feed-title">
+            <a href="#" class="toogle">
+              <%= published %>: <%= title %>
+            </a>
+            
+            <div class="feed-abstract">
+              <%= summary %>
+            </div>
+          </div>
+          
+          <div class="feed-content">
+            <%= content %>
+          </div>
+          
+        </div>
+      </div>
     </script>
   
     <script src="js/models.js"></script>
