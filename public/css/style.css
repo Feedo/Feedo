@@ -49,15 +49,18 @@ body {
 .menu-item a {
     text-decoration: none;
 }
+
 .feed-item-menu-item .menu-item-inner {
 	text-align: left;
 }
-
 .feed-item-menu-item.open .menu-item-inner {
   background-color: inherit;
 }
-#feed-view {
-    padding-right: 6px;
+.feed-item-menu-item {
+  padding: 6px;
+}
+.feed-item-menu-item.unread .menu-item {
+  background-color: rgb(10, 10, 10);
 }
 .feed-item {
     padding: 15px;

@@ -141,6 +141,12 @@ var FeedItemMenuItemView = Backbone.View.extend({
     this.$el.html(this.template(this.model.toJSON()));
     this.$el.find('.feed-content').hide();
     
+    if ( !this.model.get("read") ) {
+      this.$el.addClass("unread");
+    } else {
+      this.$el.removeClass("unread");
+    }
+    
     return this;
   },
   
