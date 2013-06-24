@@ -42,28 +42,35 @@ var FeedMenuItemView = Backbone.View.extend({
   template: _.template($("#feed-menu-item-template").html()),
   tagName: 'li',
   className: 'feed-menu-item',
- 
+  
+  // attach event handler
   events: {
     'click': 'showFeedItems'
   },
   
   initialize: function() {
+    // listen to changes to the items
     this.model.on('change', this.render, this);
     this.model.on('destroy', this.remove, this);
   },
   
   render: function() {
-    var $el = $(this.$el);
-    $el.data('feedId', this.model.get('id'));
-    $el.html(this.template(this.model.toJSON()));
+    // add some data to the DON
+    this.$el.data('feedId', this.model.get('id') );
+    // render from model to template
+    this.$el.html(this.template(this.model.toJSON()));
     
     return this;
   },
   
   showFeedItems: function() {
-    var self = this;
-    new FeedItemMenuView({collection: self.model.get("items")}).render();
+    // create new view for feed items
+    new FeedItemMenuView({
+      collection: self.model.get("items") // based on items from the model
+    }).render(); // render to DOM
+    // clear the item view
     $("#feed-view").html("");
+    
     return false;
   }
   
