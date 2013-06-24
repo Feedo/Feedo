@@ -171,7 +171,9 @@ var AppView = Backbone.View.extend({
 
   initialize: function() {
     
-    var FeedMenu = new FeedMenuView({collection: Feeds});
+    var FeedMenu = new FeedMenuView({
+      collection: Feeds
+    });
     Feeds.fetch();
     
   },
