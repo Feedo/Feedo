@@ -136,11 +136,31 @@ var AppView = Backbone.View.extend({
     
   },
   
+  updateAndRefresh: function() {
+    // save for later usage
+    var self = this;
+    
+    // add a indicator for progress
+    $("#btn-refresh .icon-refresh").addClass("rotating");
+    // make the server parse the feeds
+    $.get("/update_feeds", function(responseData) {
+      // something should have happened, let's see...
+      self.refresh();
+      
+      $("#btn-refresh .icon-refresh.rotating").removeClass("rotating");
+    });
+  },
+  refresh: function() {
+    Feeds.fetch();
+  },
+  
   events: {
     /* Add Feed Modal */
     "keyup #modal-add-feed #input-add-feed": "checkAddFeedInput",
     "keydown #modal-add-feed #input-add-feed": "checkAddFeedInput",
-    "click #modal-add-feed .btn-primary": "addFeed"
+    "click #modal-add-feed .btn-primary": "addFeed",
+    
+    "click #btn-refresh": "updateAndRefresh"
   },
   
   /* Add Feed Modal */
@@ -167,6 +187,8 @@ var AppView = Backbone.View.extend({
       feed.save({}, {
         success: function(model, response, options) {
           $("#modal-add-feed").modal('hide');
+          
+          this.refresh();
         },
         error: function(model, xhr, options) {
           alert("Something went wrong adding the feed.");
