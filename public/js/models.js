@@ -4,7 +4,7 @@ var Feed = Backbone.RelationalModel.extend({
     key: 'items',
     relatedModel: 'FeedItem',
     collectionType: 'FeedItemCollection',
-    collectionOptions: function(instance){ return {id: instance.id}; }
+    collectionOptions: function(instance){ return {instance: instance}; }
   }],
   
   url: "/feeds"
@@ -30,7 +30,13 @@ var FeedItemCollection = Backbone.Collection.extend({
   },
   
   initialize: function(data, options) {
-    this.url = "/feeds/" + options.id + "/items";
+    console.log(options);
+    var self = this;
+    options.instance.bind("change", function() {
+      self.url = "/feeds/" + options.instance.id + "/items";
+      self.fetch();
+    });
+    self.url = "/feeds/" + options.instance.id + "/items";
   }
 })
 
