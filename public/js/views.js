@@ -79,25 +79,36 @@ var FeedMenuItemView = Backbone.View.extend({
   
 });
 
+/* Feed's item list */
 var FeedItemMenuView = Backbone.View.extend({
+  // our container div#id
   el: $("#feed-menu-view"),
   
   initialize: function() {
+    // listen to changes to the model
     this.collection.on('add', this.render, this);
     this.collection.on('destroy', this.remove, this);
-    this.collection.fetch();
+    // this.collection.fetch();
   },
   
   render: function() {
-    this.collection.sort();
+    // save for later usage
+    var self = this;
     
-    var $el = $(this.$el);
-    $el.html("");
-    this.collection.each(function(item) {      
+    // sort the feed's items
+    self.collection.sort();
+    
+    // remove all items already there
+    self.$el.html("");
+    // add each of the feed's items
+    self.collection.each(function(item) {      
+      // create new view object...
+      var itemView = new FeedItemMenuItemView({
+        model: item // ... based on the model
+      });
       
-      var itemView;
-      itemView = new FeedItemMenuItemView({model: item});
-      $el.append(itemView.render().el);
+      // add to view
+      self.$el.append(itemView.render().el);
     });
     
     return this;
