@@ -174,22 +174,28 @@ var AppView = Backbone.View.extend({
     }
   },
   addFeed: function() {
+    // save for later usage
+    var self = this;
+    // get the url from the user
     var url = $("#input-add-feed").val();
     
     if ( url ) {
       
-      // create feed
+      // create the feed object
       var feed = new Feed({
         file_url: url
       });
+      // disable all controls
       $("#modal-add-feed input, #modal-add-feed .btn").attr('disabled', 'disabled');
       // sync to server
       feed.save({}, {
+        // yay! We did it!
         success: function(model, response, options) {
           $("#modal-add-feed").modal('hide');
           
-          this.refresh();
+          self.refresh();
         },
+        // Server-side guy messed up again
         error: function(model, xhr, options) {
           alert("Something went wrong adding the feed.");
         }
