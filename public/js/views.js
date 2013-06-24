@@ -64,6 +64,9 @@ var FeedMenuItemView = Backbone.View.extend({
   },
   
   showFeedItems: function() {
+    // save for later usage
+    var self = this;
+    
     // create new view for feed items
     new FeedItemMenuView({
       collection: self.model.get("items") // based on items from the model
