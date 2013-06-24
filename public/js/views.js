@@ -88,7 +88,8 @@ var FeedItemMenuView = Backbone.View.extend({
     // listen to changes to the model
     this.collection.on('add', this.render, this);
     this.collection.on('destroy', this.remove, this);
-    // this.collection.fetch();
+    // load feed items!!!
+    this.collection.fetch();
   },
   
   render: function() {
