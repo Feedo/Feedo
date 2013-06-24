@@ -164,7 +164,7 @@ var AppView = Backbone.View.extend({
       });
       $("#modal-add-feed input, #modal-add-feed .btn").attr('disabled', 'disabled');
       // sync to server
-      feed.save({
+      feed.save({}, {
         success: function(model, response, options) {
           $("#modal-add-feed").modal('hide');
         },
