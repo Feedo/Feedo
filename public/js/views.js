@@ -185,6 +185,8 @@ var FeedItemMenuItemView = Backbone.View.extend({
       this.$el.find('.feed-content').fadeOut('fast');
     }
     
+    this.$el.smoothScrollTo();
+    
     return false;
   },
 });
