@@ -127,7 +127,7 @@ var FeedItemMenuItemView = Backbone.View.extend({
   
   // attach event handler
   events: {
-    'click': 'toggleVisibility'
+    'click': 'handleClick'
   },
   
   initialize: function() {
@@ -141,13 +141,30 @@ var FeedItemMenuItemView = Backbone.View.extend({
     this.$el.html(this.template(this.model.toJSON()));
     this.$el.find('.feed-content').hide();
     
+    // add/remove 'read' class indicator
     if ( !this.model.get("read") ) {
       this.$el.addClass("unread");
     } else {
       this.$el.removeClass("unread");
     }
     
+    // make links open in new tab
+    this.$el.find('.feed-content a').attr('target', '_blank').data('external-link', true);
+    // add alt text to images, if they have none
+    if ( !this.$el.find('.feed-content img').attr('alt') ) {
+      this.$el.find('.feed-content img').attr('alt', 'Image');
+    } 
+    
     return this;
+  },
+  
+  handleClick: function(e) {
+    var $el = $(e.target);
+    
+    // if is link by us
+    if ( !$el.data('external-link') ) {
+      return this.toggleVisibility();
+    }
   },
   
   toggleVisibility: function() {
@@ -168,8 +185,10 @@ var FeedItemMenuItemView = Backbone.View.extend({
       this.$el.find('.feed-content').fadeOut('fast');
     }
     
+    this.$el.smoothScrollTop();
+    
     return false;
-  }
+  },
 });
 
 var AppView = Backbone.View.extend({

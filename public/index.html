@@ -3,6 +3,7 @@
   <head>
     <title>Feedo</title>
     <script src="js/libs/jquery-1.10.1.js"></script>
+    <script src="js/libs/jquery.smoothScroll.js"></script>
     <script src="js/libs/json2.js"></script>
     <script src="js/libs/underscore.js"></script>
     <script src="js/libs/backbone.js"></script>
@@ -100,17 +101,23 @@
         <div class="menu-item-inner">
           
           <div class="feed-title">
-            <a href="#" class="toogle">
+            <a href="<%= link %>" target="_blank" data-external-link="true" title="Open link on original page">
               <%= published %>: <%= title %>
             </a>
             
+            <% if ( content ) { %>
             <div class="feed-abstract">
               <%= summary %>
             </div>
+            <% } %>
           </div>
           
           <div class="feed-content">
-            <%= content %>
+            <% if ( content ) { %>
+              <%= content %>
+            <% } else { %>
+              <%= summary %>  
+            <% } %>
           </div>
           
         </div>
