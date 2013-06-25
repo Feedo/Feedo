@@ -150,6 +150,10 @@ var FeedItemMenuItemView = Backbone.View.extend({
     
     // make links open in new tab
     this.$el.find('.feed-content a').attr('target', '_blank').data('external-link', true);
+    // add alt text to images, if they have none
+    if ( !this.$el.find('.feed-content img').attr('alt') ) {
+      this.$el.find('.feed-content img').attr('alt', 'Image');
+    } 
     
     return this;
   },
