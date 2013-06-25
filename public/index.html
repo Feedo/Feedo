@@ -104,13 +104,19 @@
               <%= published %>: <%= title %>
             </a>
             
+            <% if ( content ) { %>
             <div class="feed-abstract">
               <%= summary %>
             </div>
+            <% } %>
           </div>
           
           <div class="feed-content">
-            <%= content %>
+            <% if ( content ) { %>
+              <%= content %>
+            <% } else { %>
+              <%= summary %>  
+            <% } %>
           </div>
           
         </div>
