@@ -4,8 +4,10 @@ class FeedItem < ActiveRecord::Base
   
   def self.insert_or_update(feed, feedzirra_entry)
     target = FeedItem.where(:feed_id => feed.id, :item_guid => feedzirra_entry.entry_id).first
-  
+    update = true
+    
     if(target == nil) then
+      update = false
       target = FeedItem.new
     end
 
@@ -19,7 +21,8 @@ class FeedItem < ActiveRecord::Base
     target.image = feedzirra_entry.image unless !feedzirra_entry.respond_to?('image')
     target.item_guid = feedzirra_entry.entry_id.to_s
     
-    target.read = false
+    
+    target.read = update ? target.read : false
     
     target.save 
   end
