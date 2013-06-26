@@ -73,7 +73,7 @@ class Feedo < Sinatra::Base
     feeds = Feed.all
     
     content_type :json
-    feeds.to_json(:include => {:feed_items => {:only => :id}})
+    feeds.to_json
   end
   
   post '/feeds' do
