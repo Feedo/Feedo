@@ -97,7 +97,7 @@ class Feedo < Sinatra::Base
   end
   
   get '/feeds/:id/items' do    
-    feed_items = FeedItem.where(:feed_id => params[:id]).paginate(:page => params[:page], :per_page => params[:per_page])
+    feed_items = FeedItem.where(:feed_id => params[:id]).paginate(:page => params[:page], :per_page => params[:perPage])
     
     content_type :json
     feed_items.to_json
