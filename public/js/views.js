@@ -114,7 +114,25 @@ var FeedItemMenuView = Backbone.View.extend({
       self.$el.append(itemView.render().el);
     });
     
+    // "Load more..." button
+    var nextPage = document.createElement("button");
+    $(nextPage).addClass("btn btn-primary");
+    $(nextPage).text("Load more...");
+    $(nextPage).click(function() {
+      self.loadNextPage();
+    });
+    var wrapper = document.createElement("li");
+    $(wrapper).css('text-align', 'center');
+    $(wrapper).append(nextPage);
+    self.$el.append(wrapper);
+    
     return this;
+  },
+  
+  loadNextPage: function() {
+    // load next page
+    this.collection.nextPage();
+    console.log(this.collection);
   }
 });
 /* Feed's item list ITEM */
