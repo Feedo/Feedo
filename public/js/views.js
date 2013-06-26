@@ -129,9 +129,9 @@ var FeedItemMenuView = Backbone.View.extend({
     return this;
   },
   
-  loadNextPage: function() {
+  addNextPage: function() {
     // load next page
-    this.collection.nextPage();
+    this.collection.addNextPage();
     console.log(this.collection);
   }
 });
