@@ -2,6 +2,9 @@ require 'sinatra/base'
 require 'sinatra/activerecord'
 require 'sinatra/config_file'
 
+require 'will_paginate'
+require 'will_paginate/active_record'
+
 require 'rufus/scheduler'
 
 require 'feedzirra'
@@ -93,11 +96,11 @@ class Feedo < Sinatra::Base
     feed.to_json
   end
   
-  get '/feeds/:id/items' do
-    feed = Feed.find(params[:id])
+  get '/feeds/:id/items' do    
+    feed_items = FeedItem.where(:feed_id => params[:id]).paginate(:page => params[:page], :per_page => params[:per_page])
     
     content_type :json
-    feed.feed_items.to_json
+    feed_items.to_json
   end
   
   get '/feeds/:feed_id/items/:item_id' do
