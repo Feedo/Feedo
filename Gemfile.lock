@@ -68,6 +68,7 @@ GEM
       rack (>= 1.0.0)
     tilt (1.4.1)
     tzinfo (0.3.37)
+    will_paginate (3.0.4)
 
 PLATFORMS
   ruby
@@ -83,3 +84,4 @@ DEPENDENCIES
   sinatra-contrib
   sqlite3
   thin
+  will_paginate (~> 3.0.0)

@@ -4,6 +4,7 @@ gem 'sinatra'
 gem 'sinatra-contrib'
 
 gem "sinatra-activerecord"
+gem 'will_paginate', '~> 3.0.0'
 
 group :development do
   gem 'sqlite3'
