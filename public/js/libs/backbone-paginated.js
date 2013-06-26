@@ -1,6 +1,6 @@
 var PaginatedCollection = Backbone.Collection.extend({
   initialize: function() {
-    _.bindAll(this, 'parse', 'nextPage', 'previousPage');
+    _.bindAll(this, 'parse', 'addNextPage');
     typeof(options) != 'undefined' || (options = {});
     this.page = 1;
     typeof(this.perPage) != 'undefined' || (this.perPage = 10);
