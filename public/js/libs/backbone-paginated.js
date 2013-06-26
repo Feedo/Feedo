@@ -17,10 +17,11 @@ var PaginatedCollection = Backbone.Collection.extend({
     return Backbone.Collection.prototype.fetch.call(this, options);
   },
   parse: function(resp) {
-    this.page = resp.page;
+    /*this.page = resp.page;
     this.perPage = resp.perPage;
-    this.total = resp.total;
-    return resp.models;
+    this.total = resp.total;*/
+    console.log(resp);
+    return resp;
   },
   url: function() {
      return this.baseUrl + '?' + $.param({page: this.page, perPage: this.perPage});
