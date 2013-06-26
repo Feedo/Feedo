@@ -116,11 +116,13 @@ var FeedItemMenuView = Backbone.View.extend({
     
     // "Load more..." button
     var nextPage = document.createElement("button");
-    $(nextPage).addClass("btn btn-primary");
-    $(nextPage).text("Load more...");
+    $(nextPage).addClass("btn btn-primary ladda-button");
+    $(nextPage).attr('data-style', 'contract');
+    $(nextPage).html('<span class="ladda-label">Load more...</span>');
     $(nextPage).click(function() {
       self.addNextPage();
     });
+    Ladda.bind(nextPage);
     var wrapper = document.createElement("li");
     $(wrapper).css('text-align', 'center');
     $(wrapper).append(nextPage);
@@ -129,10 +131,9 @@ var FeedItemMenuView = Backbone.View.extend({
     return this;
   },
   
-  addNextPage: function() {
+  addNextPage: function(callback) {
     // load next page
     this.collection.addNextPage();
-    console.log(this.collection);
   }
 });
 /* Feed's item list ITEM */
