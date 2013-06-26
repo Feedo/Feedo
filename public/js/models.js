@@ -22,7 +22,7 @@ var FeedCollection = Backbone.Collection.extend({
 var FeedItem = Backbone.RelationalModel.extend({
 });
 
-var FeedItemCollection = Backbone.Collection.extend({
+var FeedItemCollection = PaginatedCollection.extend({
   model: FeedItem,
   
   comparator: function(item) {    
@@ -30,13 +30,16 @@ var FeedItemCollection = Backbone.Collection.extend({
   },
   
   initialize: function(data, options) {
-    console.log(options);
     var self = this;
+    
     options.instance.bind("change", function() {
-      self.url = "/feeds/" + options.instance.id + "/items";
+      self.baseUrl = "/feeds/" + options.instance.id + "/items";
       self.fetch();
     });
-    self.url = "/feeds/" + options.instance.id + "/items";
+    
+    self.baseUrl = "/feeds/" + options.instance.id + "/items";
+    
+    return PaginatedCollection.prototype.initialize.call(this)
   }
 })
 
