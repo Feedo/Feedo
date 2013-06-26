@@ -33,11 +33,10 @@ var FeedItemCollection = PaginatedCollection.extend({
     var self = this;
     
     options.instance.bind("change", function() {
-      self.baseUrl = "/feeds/" + options.instance.id + "/items";
-      self.fetch();
+      self.url = "/feeds/" + options.instance.id + "/items";
     });
     
-    self.baseUrl = "/feeds/" + options.instance.id + "/items";
+    self.url = "/feeds/" + options.instance.id + "/items";
     
     return PaginatedCollection.prototype.initialize.call(this)
   }

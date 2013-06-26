@@ -1,6 +1,6 @@
 var PaginatedCollection = Backbone.Collection.extend({
   initialize: function() {
-    _.bindAll(this, 'parse', 'url', 'pageInfo', 'nextPage', 'previousPage');
+    _.bindAll(this, 'parse', 'pageInfo', 'nextPage', 'previousPage');
     typeof(options) != 'undefined' || (options = {});
     this.page = 1;
     typeof(this.perPage) != 'undefined' || (this.perPage = 10);
@@ -14,6 +14,9 @@ var PaginatedCollection = Backbone.Collection.extend({
       self.trigger("fetched");
       if(success) { success(self, resp); }
     };
+    
+    $.extend(true, options, {data: $.param({page: this.page, perPage: this.perPage})})
+    
     return Backbone.Collection.prototype.fetch.call(this, options);
   },
   parse: function(resp) {
@@ -22,9 +25,6 @@ var PaginatedCollection = Backbone.Collection.extend({
     this.total = resp.total;*/
     console.log(resp);
     return resp;
-  },
-  url: function() {
-     return this.baseUrl + '?' + $.param({page: this.page, perPage: this.perPage});
   },
   pageInfo: function() {
     var info = {
