@@ -119,10 +119,15 @@ var FeedItemMenuView = Backbone.View.extend({
     $(nextPage).addClass("btn btn-primary ladda-button");
     $(nextPage).attr('data-style', 'contract');
     $(nextPage).html('<span class="ladda-label">Load more...</span>');
+    var l = Ladda.create(nextPage);
+    
     $(nextPage).click(function() {
+      l.start();
+      
       self.addNextPage();
     });
-    Ladda.bind(nextPage);
+    
+    
     var wrapper = document.createElement("li");
     $(wrapper).css('text-align', 'center');
     $(wrapper).append(nextPage);
