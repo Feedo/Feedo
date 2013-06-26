@@ -89,6 +89,7 @@ class Feedo < Sinatra::Base
     
     feed.update_feed
     
+    content_type :json
     feed.to_json
   end
   
