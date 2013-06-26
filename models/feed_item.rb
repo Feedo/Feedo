@@ -1,5 +1,5 @@
 class FeedItem < ActiveRecord::Base
-  attr_accessible :title, :content, :summary, :image, :published, :link, :author, :item_guid
+  attr_accessible :title, :content, :summary, :image, :published, :link, :author, :item_guid, :read
   belongs_to :feed
   
   def self.insert_or_update(feed, feedzirra_entry)
