@@ -4,6 +4,8 @@ class Feed < ActiveRecord::Base
   
   validates :file_url, :presence => true
   
+  before_destroy :delete_items
+  
   def update_feed
     begin     
       Feedo.logger.info "Checking "+self.file_url+"..."
@@ -22,4 +24,9 @@ class Feed < ActiveRecord::Base
       Feedo.logger.error "#{self.file_url} is invalid!"
     end
   end
+  
+  private
+    def delete_items
+      FeedItem.where(:feed_id => id).destroy_all
+    end
 end

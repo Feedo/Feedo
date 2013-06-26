@@ -129,7 +129,7 @@ class Feedo < Sinatra::Base
   end
   
   delete '/feeds/:id' do
-    Feed.delete(params[:id])
+    Feed.destroy(params[:id])
     
     redirect '/'
   end
