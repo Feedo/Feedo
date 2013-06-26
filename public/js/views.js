@@ -119,7 +119,7 @@ var FeedItemMenuView = Backbone.View.extend({
     $(nextPage).addClass("btn btn-primary");
     $(nextPage).text("Load more...");
     $(nextPage).click(function() {
-      self.loadNextPage();
+      self.addNextPage();
     });
     var wrapper = document.createElement("li");
     $(wrapper).css('text-align', 'center');
