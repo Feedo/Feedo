@@ -73,8 +73,6 @@ var FeedMenuItemView = Backbone.View.extend({
     new FeedItemMenuView({
       collection: self.model.get("items") // based on items from the model
     }).render(); // render to DOM
-    // clear the item view
-    $("#feed-view").html("");
     
     return false;
   }
