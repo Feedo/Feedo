@@ -254,7 +254,7 @@ var FeedItemMenuItemView = Backbone.View.extend({
     this.$el.smoothScrollTop();
     
     return false;
-  },
+  }
 });
 
 var AppView = Backbone.View.extend({
