@@ -69,10 +69,15 @@ var FeedMenuItemView = Backbone.View.extend({
     // save for later usage
     var self = this;
     
-    // create new view for feed items
-    new FeedItemMenuView({
-      collection: self.model.get("items") // based on items from the model
-    }).render(); // render to DOM
+    if ( !self.itemMenuView ) {
+      // create new view for feed items
+      self.itemMenuView = new FeedItemMenuView({
+        collection: self.model.get("items") // based on items from the model
+      });
+    }
+    // remove all buttons to avoid confusion (!!!)
+    $('#btn-next-page').remove();
+    self.itemMenuView.render(); // render to DOM
     
     return false;
   }
@@ -90,6 +95,49 @@ var FeedItemMenuView = Backbone.View.extend({
     this.collection.on('destroy', this.remove, this);
     // load feed items!!!
     this.collection.fetch();
+  },
+  initializePaginationButton: function() {
+    // save for later usage
+    var self = this;
+    
+    // build button
+    if ( !self.nextButton && self.$el ) {
+      // "Load more..." button
+      var nextPage = document.createElement("button");
+      $(nextPage).addClass("btn btn-primary ladda-button");
+      $(nextPage).attr('data-style', 'contract');
+      $(nextPage).html('<span class="ladda-label">Load more...</span>');
+      var ladda = Ladda.create(nextPage);
+      $(nextPage).click(function() {
+        // start the animation
+        ladda.start();
+      
+        self.addNextPage(function() {
+          // stop animation
+          ladda.stop();
+        });
+      });
+      
+      var wrapper = document.createElement("div");
+      $(wrapper).attr('id', 'btn-next-page');
+      // center the button
+      $(wrapper).css('text-align', 'center');
+      $(wrapper).append(nextPage);
+      
+      self.nextButton = wrapper;
+    }
+    
+    // add button if none is there
+    if ( $('#btn-next-page').length == 0 ) {
+      self.$el.after(self.nextButton);
+    }
+    
+    // show the button only if there are more items to load
+    if ( self.collection.length < ( self.collection.page * self.collection.perPage ) ) {
+      $(self.nextButton).fadeOut();
+    } else {
+      $(self.nextButton).fadeIn();
+    }
   },
   
   render: function() {
@@ -112,41 +160,25 @@ var FeedItemMenuView = Backbone.View.extend({
       self.$el.append(itemView.render().el);
     });
     
-    // "Load more..." button
-    var nextPage = document.createElement("button");
-    $(nextPage).addClass("btn btn-primary ladda-button");
-    $(nextPage).attr('data-style', 'contract');
-    $(nextPage).html('<span class="ladda-label">Load more...</span>');
-    var l = Ladda.create(nextPage);
-    
-    $(nextPage).click(function() {
-      // start the animation
-      l.start();
-      
-      self.addNextPage();
-    });
-    
-    
-    var wrapper = document.createElement("li");
-    $(wrapper).css('text-align', 'center');
-    $(wrapper).append(nextPage);
-    self.$el.append(wrapper);
+    this.initializePaginationButton();
     
     return this;
   },
   
-  addNextPage: function() {
+  addNextPage: function(success) {
     // save for later usage
     var self = this;
     
     // load next page
     self.collection.addNextPage(function(newCollection) {
-      var newLength = newCollection.length;
+      success && success(newCollection);
       
+      // total amount of items loaded
+      var newLength = newCollection.length;
       // when there are no more pages...
       if ( newLength < ( newCollection.page * newCollection.perPage ) ) {
         // remove the button
-        self.$el.find('.ladda-button').remove();
+        $(self.nextButton).hide();
       }
     });
   }
