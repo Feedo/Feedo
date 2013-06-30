@@ -57,7 +57,7 @@ var FeedMenuItemView = Backbone.View.extend({
   },
   
   render: function() {
-    // add some data to the DON
+    // add some data to the DOM
     this.$el.data('feedId', this.model.get('id') );
     // render from model to template
     this.$el.html(this.template(this.model.toJSON()));
