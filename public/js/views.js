@@ -122,6 +122,7 @@ var FeedItemMenuView = Backbone.View.extend({
     var l = Ladda.create(nextPage);
     
     $(nextPage).click(function() {
+      // start the animation
       l.start();
       
       self.addNextPage();
@@ -136,9 +137,20 @@ var FeedItemMenuView = Backbone.View.extend({
     return this;
   },
   
-  addNextPage: function(callback) {
+  addNextPage: function() {
+    // save for later usage
+    var self = this;
+    
     // load next page
-    this.collection.addNextPage();
+    self.collection.addNextPage(function(newCollection) {
+      var newLength = newCollection.length;
+      
+      // when there are no more pages...
+      if ( newLength < ( newCollection.page * newCollection.perPage ) ) {
+        // remove the button
+        self.$el.find('.ladda-button').remove();
+      }
+    });
   }
 });
 /* Feed's item list ITEM */
