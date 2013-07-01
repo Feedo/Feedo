@@ -23,3 +23,5 @@ gem 'feedzirra'
 gem 'json'
 
 gem 'thin'
+
+gem 'pismo'
