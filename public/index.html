@@ -95,13 +95,14 @@
     </div>
     
     <script type="text/template" id="feed-menu-item-template">
-    <div class="menu-item">
-    <div class="menu-item-inner">
-    <a href="#">
-    <%= title %>
-    </a>
-    </div>
-    </div>
+      <div class="menu-item">
+        <div class="menu-item-inner">
+          <a href="#">
+            <img class="feed-favicon" src="<%= favicon_url %>" alt="Favicon of <%= title %>" title="<%= title %>">
+            <%= title %>
+          </a>
+        </div>
+      </div>
     </script>
     <script type="text/template" id="feed-item-menu-item-template">
       <div class="menu-item">

@@ -50,6 +50,13 @@ body {
     text-decoration: none;
 }
 
+.feed-favicon {
+  width: 24px;
+  height: 24px;
+  
+  float: left;
+}
+
 .feed-item-menu-item .menu-item-inner {
 	text-align: left;
 }
