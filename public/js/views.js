@@ -325,12 +325,16 @@ var AppView = Backbone.View.extend({
         // yay! We did it!
         success: function(model, response, options) {
           $("#modal-add-feed").modal('hide');
+          // enable controls again
+          $("#modal-add-feed input, #modal-add-feed .btn").removeAttr('disabled');
           
           self.refresh();
         },
         // Server-side guy messed up again
         error: function(model, xhr, options) {
           alert("Something went wrong adding the feed.");
+          // enable controls again
+          $("#modal-add-feed input, #modal-add-feed .btn").removeAttr('disabled');
         }
       });
       
