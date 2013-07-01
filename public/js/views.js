@@ -325,6 +325,8 @@ var AppView = Backbone.View.extend({
         // yay! We did it!
         success: function(model, response, options) {
           $("#modal-add-feed").modal('hide');
+          // clear input value
+          $("#input-add-feed").val("");
           // enable controls again
           $("#modal-add-feed input, #modal-add-feed .btn").removeAttr('disabled');
           
