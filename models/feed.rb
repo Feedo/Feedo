@@ -24,7 +24,7 @@ class Feed < ActiveRecord::Base
       self.favicon_url = self.link + "/favicon.ico" if doc.favicon.nil?
     end
     # we need to handle yahoo pipes specially here
-    if (self.favicon_url.nil? or !file_url_exists(self.favicon_url) or self.link.include?("pipes.yahoo")) then
+    if (self.favicon_url.nil? or self.favicon_url == "img/feed-icon.png" or !file_url_exists(self.favicon_url) or self.link.include?("pipes.yahoo")) then
       self.favicon_url = "img/feed-icon.png"
     end
     
