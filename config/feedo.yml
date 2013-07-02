@@ -1,5 +1,5 @@
 use_internal_scheduler: true
-scheduler_interval: "30m"
+scheduler_interval: "2m"
 auth_enabled: false
 auth_username: "udolf"
 auth_password: "crazyReinhardt1234567?!"
