@@ -4,9 +4,11 @@ class FeedItem < ActiveRecord::Base
   
   def self.insert_or_update(feed, feedzirra_entry)
     target = FeedItem.where(:feed_id => feed.id, :item_guid => feedzirra_entry.entry_id).first
+    target = FeedItem.where(:feed_id => feed.id, :published => feedzirra_entry.published).first if target.nil?
+    
     update = true
     
-    if(target == nil) then
+    if target.nil? then
       update = false
       target = FeedItem.new
     end
