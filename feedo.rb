@@ -47,6 +47,12 @@ class Feedo < Sinatra::Base
     @@scheduler.in "2s" do
       update_feeds
     end
+    
+    if settings.auth_enabled then
+      use Rack::Auth::Basic, "Restricted Area" do |username, password|
+        username == settings.auth_username and password == settings.auth_password
+      end
+    end
   end
   
   def self.update_feeds
