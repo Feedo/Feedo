@@ -16,14 +16,15 @@ class Feed < ActiveRecord::Base
     self.link = feedzirra.url
     self.description = feedzirra.description
     
-    # fetch the favicon
-    doc = Pismo::Document.new(self.link)
+    if !self.link.nil? then
+      # fetch the favicon
+      doc = Pismo::Document.new(self.link)
     
-    self.favicon_url = doc.favicon unless doc.favicon.nil?
-    self.favicon_url = self.link + "/favicon.ico" if doc.favicon.nil?
-    
+      self.favicon_url = doc.favicon unless doc.favicon.nil?
+      self.favicon_url = self.link + "/favicon.ico" if doc.favicon.nil?
+    end
     # we need to handle yahoo pipes specially here
-    if (!file_url_exists(self.favicon_url) or self.link.include?("pipes.yahoo")) then
+    if (self.favicon_url.nil? or !file_url_exists(self.favicon_url) or self.link.include?("pipes.yahoo")) then
       self.favicon_url = "img/feed-icon.png"
     end
     
