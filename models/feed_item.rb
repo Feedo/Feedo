@@ -28,10 +28,6 @@ class FeedItem < ActiveRecord::Base
     
     target.read = update ? target.read : false
     
-    feed.has_unread = true if !target.read
-    
-    feed.save
-    
     target.save 
   end
   
