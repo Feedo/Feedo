@@ -44,7 +44,7 @@ class Feedo < Sinatra::Base
   
     ActiveRecord::Base.include_root_in_json = false
     
-    @@scheduler.in "10s" do
+    @@scheduler.in "2s" do
       update_feeds
     end
   end
