@@ -131,9 +131,8 @@ class Feedo < Sinatra::Base
   delete '/feeds/:id' do
     Feed.destroy(params[:id])
     
-    redirect '/'
+    {}.to_json
   end
- 
   
   not_found do
     erb :'404'
