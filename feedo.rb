@@ -107,8 +107,9 @@ class Feedo < Sinatra::Base
     
     begin
       feed.update_feed
-    rescue
+    rescue Exception => e
       Feed.destroy(feed)
+      @@logger.error "Invalid feed! #{e}"
       return 400, {:message => "The Feed seems to be invalid."}.to_json
     end
     content_type :json
