@@ -53,7 +53,16 @@ class Feedo < Sinatra::Base
     @@logger.info "Starting to check the Feeds..."
     
     Feed.all.each do |feed|
-      feed.update_feed
+      begin
+        Feedo.logger.info "Checking #{feed.file_url}..."
+        
+        feed.update_feed
+        
+        Feedo.logger.info "Checked #{feed.file_url}"   
+        
+      rescue Exception => e
+        @@logger.error "#{feed.file_url} is invalid! #{e}"
+      end
       
     end
     ActiveRecord::Base.connection.close
@@ -82,16 +91,20 @@ class Feedo < Sinatra::Base
   post '/feeds' do
     url = JSON.parse(request.body.read)["file_url"]
     
-    return 400 if url.nil? or url.empty? 
+    return 400, {:message => "Please specify an URL!"}.to_json if url.nil? or url.empty? 
         
-    return 409 if Feed.where(:file_url => url).exists?
+    return 409, {:message => "The Feed was already added."}.to_json if Feed.where(:file_url => url).exists?
     
     feed = Feed.new
     feed.file_url = url
     feed.save
     
-    feed.update_feed
-    
+    begin
+      feed.update_feed
+    rescue
+      Feed.destroy(feed)
+      return 400, {:message => "The Feed seems to be invalid."}.to_json
+    end
     content_type :json
     feed.to_json
   end

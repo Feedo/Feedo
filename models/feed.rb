@@ -9,35 +9,28 @@ class Feed < ActiveRecord::Base
   
   before_destroy :delete_items
   
-  def update_feed
-    begin     
-      Feedo.logger.info "Checking "+self.file_url+"..."
-      feedzirra = Feedzirra::Feed.fetch_and_parse(self.file_url)
-      
-      self.title = feedzirra.title
-      self.link = feedzirra.url
-      self.description = feedzirra.description
-      
-      # fetch the favicon
-      doc = Pismo::Document.new(self.link)
-      
-      self.favicon_url = doc.favicon unless doc.favicon.nil?
-      self.favicon_url = self.link + "/favicon.ico" if doc.favicon.nil?
-      
-      # we need to handle yahoo pipes specially here
-      if (!file_url_exists(self.favicon_url) or self.link.include?("pipes.yahoo")) then
-        self.favicon_url = "img/feed-icon.png"
-      end
-      
-      feedzirra.entries.each do |entry|
-        FeedItem.insert_or_update(self, entry)
-      end
-      save!
-      Feedo.logger.info "Checked "+self.file_url+"."
+  def update_feed   
+    feedzirra = Feedzirra::Feed.fetch_and_parse(self.file_url)
     
-    rescue Exception => e
-      Feedo.logger.error "#{self.file_url} is invalid! #{e}"
+    self.title = feedzirra.title
+    self.link = feedzirra.url
+    self.description = feedzirra.description
+    
+    # fetch the favicon
+    doc = Pismo::Document.new(self.link)
+    
+    self.favicon_url = doc.favicon unless doc.favicon.nil?
+    self.favicon_url = self.link + "/favicon.ico" if doc.favicon.nil?
+    
+    # we need to handle yahoo pipes specially here
+    if (!file_url_exists(self.favicon_url) or self.link.include?("pipes.yahoo")) then
+      self.favicon_url = "img/feed-icon.png"
     end
+    
+    feedzirra.entries.each do |entry|
+      FeedItem.insert_or_update(self, entry)
+    end
+    save!
   end
   
   private
