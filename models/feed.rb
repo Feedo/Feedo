@@ -40,6 +40,12 @@ class Feed < ActiveRecord::Base
     end
     
     def file_url_exists(url)
-      open(url).status[0] == "200"
+      begin
+        object = open(url)
+        return true if object.status[0] == "200" and !object.read.empty? 
+        false
+      rescue
+        false
+      end
     end
 end
