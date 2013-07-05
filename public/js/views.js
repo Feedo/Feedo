@@ -341,7 +341,20 @@ var AppView = Backbone.View.extend({
         },
         // Server-side guy messed up again
         error: function(model, xhr, options) {
-          alert("Something went wrong adding the feed.");
+          var status = xhr.status;
+          
+          switch ( status ) {
+            case 400: // Bad request
+              alert("This seems to be an invalid feed.");
+              break;
+            case 409: // Conflict
+              alert("This feed is already in the database.");
+              break;
+              
+            default:
+              alert("Someting went wrong adding the feed: " + status + ' ("' + xhr.statusText + '")');
+              break;
+          } 
           // enable controls again
           $("#modal-add-feed input, #modal-add-feed .btn").removeAttr('disabled');
         }
