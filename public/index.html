@@ -27,6 +27,7 @@
   <body>
 		
     <div id="feedoapp" class="container-fluid">
+      <!-- MODAL: Add Feed -->
       <div class="modal fade hide" id="modal-add-feed">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -48,6 +49,31 @@
           </a>
           <a href="#" class="btn btn-primary">
             Add
+          </a>
+        </div>
+      </div>
+      <!-- MODAL: Delete Feed -->
+      <div class="modal fade hide" id="modal-delete-feed">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          
+          <h3>
+            Delete Feed
+          </h3>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete Feed "<span class="feed-title"></span>"?<br>
+          This cannot be undone!
+        </div>
+        
+        <div class="modal-footer">
+          <a href="#" class="btn btn-delete">
+            Yes, delete feed permanently.
+          </a>
+          <a href="#" class="btn btn-primary" data-dismiss="modal">
+            Cancel
           </a>
         </div>
       </div>

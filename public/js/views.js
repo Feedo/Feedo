@@ -48,7 +48,7 @@ var FeedMenuItemView = Backbone.View.extend({
   // attach event handler
   events: {
     'click': 'showFeedItems',
-    'click .btn-delete-feed': 'deleteFeed'
+    'click .btn-delete-feed': 'deleteFeed',
   },
   
   initialize: function() {
@@ -83,18 +83,10 @@ var FeedMenuItemView = Backbone.View.extend({
     return false;
   },
   deleteFeed: function() {
-    if ( confirm("Really delete " + this.model.get("title") + "?") ) {
-      this.model.destroy({
-        success: function(model, response, options) {
-          
-        },
-        error: function(model, xhr, options) {
-          alert("Something went wrong. Feed may not be deleted.");
-        }
-      });
-    }
+    var feedTitle = this.model.get("title");
+    $("#modal-delete-feed .feed-title").text(feedTitle);
+    $("#modal-delete-feed").modal('show').data('feed-model', this.model);
   }
-  
 });
 
 /* Feed's item list */
@@ -306,7 +298,9 @@ var AppView = Backbone.View.extend({
     "keydown #modal-add-feed #input-add-feed": "checkAddFeedInput",
     "click #modal-add-feed .btn-primary": "addFeed",
     
-    "click #btn-refresh": "updateAndRefresh"
+    "click #btn-refresh": "updateAndRefresh",
+    
+    'click #modal-delete-feed .btn-delete': 'deleteFeedConfirmed'
   },
   
   /* Add Feed Modal */
@@ -356,7 +350,23 @@ var AppView = Backbone.View.extend({
     }
     
     return false;
+  },
+  
+  deleteFeedConfirmed: function() {
+    var model = $("#modal-delete-feed").data('feed-model');
+    // delete
+    model.destroy({
+      success: function() {
+        $("#modal-delete-feed").modal('hide');
+      },
+      error: function() {
+        alert("An error occured. The feed may not be deleted.");
+      }
+    })
+    
+    return false;
   }
+  
   
 });
 
