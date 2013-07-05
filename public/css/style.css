@@ -50,16 +50,6 @@ body {
     text-decoration: none;
 }
 
-.feed-favicon {
-  width: 24px;
-  height: 24px;
-  
-  float: left;
-}
-.feed-delete {
-  float: right;
-}
-
 .feed-item-menu-item .menu-item-inner {
 	text-align: left;
 }
@@ -86,6 +76,15 @@ body {
 .feed-item-menu-item .feed-abstract {
     font-style: italic;
     font-size: small;
+}
+.feed-menu-item .feed-favicon {
+  width: 24px;
+  height: 24px;
+  
+  float: left;
+}
+.feed-menu-item .feed-delete {
+  float: right;
 }
 #btn-next-page .ladda-button {
   width: auto;
