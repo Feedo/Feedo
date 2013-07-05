@@ -63,20 +63,8 @@ var FeedMenuItemView = Backbone.View.extend({
     // render from model to template
     this.$el.html(this.template(this.model.toJSON()));
     
-    console.log(this.model);
     if ( this.model.get("has_unread") ) {
-      var unreadCount = 0;
-      var items = this.model.get("items");
-      for ( var i = 0; i < items.length; i++ ) {
-        if ( !items[i].get("read") ) {
-          unreadCount++;
-        }
-      }
-      
-      this.$el.find('.feed-unread-count').text(unreadCount).show();
-      
-    } else {
-      this.$el.find('.feed-unread-count').hide();
+      this.$el.addClass('has-unread');
     }
     
     return this;

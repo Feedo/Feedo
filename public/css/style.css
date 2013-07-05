@@ -86,14 +86,8 @@ body {
 .feed-menu-item .feed-delete {
   float: right;
 }
-.feed-menu-item .feed-unread-count {
-  
-}
-.feed-menu-item .feed-unread-count:before {
-  content: '(';
-}
-.feed-menu-item .feed-unread-count:after {
-  content: ')';
+.feed-menu-item.has-unread .menu-item {
+  background-color: black;
 }
 #btn-next-page .ladda-button {
   width: auto;
