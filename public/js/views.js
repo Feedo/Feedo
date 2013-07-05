@@ -47,7 +47,8 @@ var FeedMenuItemView = Backbone.View.extend({
   
   // attach event handler
   events: {
-    'click': 'showFeedItems'
+    'click': 'showFeedItems',
+    'click .btn-delete-feed': 'deleteFeed'
   },
   
   initialize: function() {
@@ -80,6 +81,18 @@ var FeedMenuItemView = Backbone.View.extend({
     self.itemMenuView.render(); // render to DOM
     
     return false;
+  },
+  deleteFeed: function() {
+    if ( confirm("Really delete " + this.model.get("title") + "?") ) {
+      this.model.destroy({
+        success: function(model, response, options) {
+          
+        },
+        error: function(model, xhr, options) {
+          alert("Something went wrong. Feed may not be deleted.");
+        }
+      });
+    }
   }
   
 });

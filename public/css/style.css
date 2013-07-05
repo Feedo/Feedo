@@ -56,6 +56,9 @@ body {
   
   float: left;
 }
+.feed-delete {
+  float: right;
+}
 
 .feed-item-menu-item .menu-item-inner {
 	text-align: left;
