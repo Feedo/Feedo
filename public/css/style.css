@@ -86,7 +86,7 @@ body {
 .feed-menu-item .feed-delete {
   float: right;
 }
-.feed-menu-item.has-unread .menu-item {
+.menu-item.has-unread {
   background-color: black;
 }
 #btn-next-page .ladda-button {

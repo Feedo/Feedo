@@ -62,11 +62,6 @@ var FeedMenuItemView = Backbone.View.extend({
     this.$el.data('feedId', this.model.get('id') );
     // render from model to template
     this.$el.html(this.template(this.model.toJSON()));
-    
-    if ( this.model.get("has_unread") ) {
-      this.$el.addClass('has-unread');
-    }
-    
     return this;
   },
   
