@@ -147,7 +147,11 @@
             
             <% if ( content ) { %>
             <div class="feed-abstract">
-              <%= summary %>
+              <% if (summary.length > 300) { %>
+                <%= summary.substr(0, 300)+"..." %>
+              <% } else { %>
+                <%= summary %>
+              <% } %>
             </div>
             <% } %>
           </div>
