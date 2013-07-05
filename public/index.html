@@ -125,7 +125,10 @@
         <div class="menu-item-inner">
           <a href="#">
             <img class="feed-favicon" src="<%= favicon_url %>" alt="Favicon of <%= title %>" title="<%= title %>">
-            <%= title %>
+            <span>
+              <%= title %>
+              <span class="feed-unread-count"></span>
+            </span>
             
             <div class="feed-delete">
               <a class="btn-delete-feed">&times;</a>
