@@ -165,6 +165,7 @@ var FeedItemMenuView = Backbone.View.extend({
     });
     
     self.initializePaginationButton();
+    self.$el.data('view', self);
     
     return this;
   },
@@ -371,5 +372,35 @@ var AppView = Backbone.View.extend({
   
   
 });
+var WindowView = Backbone.View.extend({
+  el: $(window),
+  
+  events: {
+    'scroll': 'onScroll'
+  },
+  
+  initialize: function() {
+    var App = new AppView;
+  },
+  
+  onScroll: function() {
+    // pixels from bottom
+    var offsetFromBottom = $(document).height() - ( this.$el.scrollTop() + this.$el.height() );
+    
+    if ( offsetFromBottom < 1 ) {
+      
+      var feedMenuView = $("#feed-menu-view").data('view');
+      
+      if ( feedMenuView ) {
+        
+        if ( $(feedMenuView.nextButton).css('display') != 'none' ) {
+          feedMenuView.addNextPage();
+        }
+        
+      }
+      
+    }
+  }
+});
 
-var App = new AppView;
+var Window = new WindowView;
