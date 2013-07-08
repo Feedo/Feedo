@@ -387,7 +387,7 @@ var WindowView = Backbone.View.extend({
     // pixels from bottom
     var offsetFromBottom = $(document).height() - ( this.$el.scrollTop() + this.$el.height() );
     
-    if ( offsetFromBottom < 1 ) {
+    if ( offsetFromBottom < 100 ) {
       
       var feedMenuView = $("#feed-menu-view").data('view');
       
