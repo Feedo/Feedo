@@ -247,6 +247,12 @@ var FeedItemMenuItemView = Backbone.View.extend({
     }
     
     if ( !this.$el.hasClass("open") ) {
+      if ( !this.$el.find('.feed-content').text() ) {
+        var content = ( this.model.get("content") ) ? this.model.get("content") : this.model.get("summary");
+        
+        this.$el.find('.feed-content').html(content);
+      }
+      
       this.$el.addClass("open");
       this.$el.find('.feed-abstract').fadeOut('fast');
       
