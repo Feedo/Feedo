@@ -380,6 +380,7 @@ var WindowView = Backbone.View.extend({
   },
   
   initialize: function() {
+    // load the app
     var App = new AppView;
   },
   
@@ -387,14 +388,14 @@ var WindowView = Backbone.View.extend({
     // pixels from bottom
     var offsetFromBottom = $(document).height() - ( this.$el.scrollTop() + this.$el.height() );
     
-    if ( offsetFromBottom < 100 ) {
+    if ( offsetFromBottom < 100 ) { // 100px before bottom of page -> load!
       
-      var feedMenuView = $("#feed-menu-view").data('view');
+      var feedMenuView = $("#feed-menu-view").data('view'); // get the current view responsible for rendering the items
       
-      if ( feedMenuView ) {
+      if ( feedMenuView ) { // if we have a view
         
-        if ( $(feedMenuView.nextButton).css('display') != 'none' ) {
-          feedMenuView.addNextPage();
+        if ( $(feedMenuView.nextButton).css('display') != 'none' ) { // if the view's button is displayed (i.e. we have another page to load)
+          feedMenuView.addNextPage(); // load the page!
         }
         
       }
