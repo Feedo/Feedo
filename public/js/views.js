@@ -249,20 +249,32 @@ var FeedItemMenuItemView = Backbone.View.extend({
     }
     
     if ( !this.$el.hasClass("open") ) {
+      // if not opened, do it
       if ( !this.$el.find('.feed-content').text() ) {
+        // if we have no content yet, get it
+        // content is either the content itself, or
+        // if the feed does not provide any content but rather only the summary
+        // than use that one (e.g. XKCD)
         var content = ( this.model.get("content") ) ? this.model.get("content") : this.model.get("summary");
         
+        // add the content as HTML (to load images, flash etc)
         this.$el.find('.feed-content').html(content);
       }
       
+      // add 'open' class
       this.$el.addClass("open");
+      // fade out abstract
       this.$el.find('.feed-abstract').fadeOut('fast');
       
+      // and show content
       this.$el.find('.feed-content').fadeIn();
     } else {
+      // remove the 'open' class
       this.$el.removeClass("open");
+      // fade in abstract
       this.$el.find('.feed-abstract').fadeIn();
       
+      // hide the main content
       this.$el.find('.feed-content').fadeOut('fast');
     }
     
