@@ -241,9 +241,11 @@ var FeedItemMenuItemView = Backbone.View.extend({
   toggleVisibility: function() {
     if ( !this.model.get("read") ) {
       // save read state
-      this.model.set("read", true).save({}, {success: function() {
-        Feeds.fetch();
-      }});
+      this.model.set("read", true).save({}, {
+        success: function() {
+          Feeds.fetch();
+        }
+      });
     }
     
     if ( !this.$el.hasClass("open") ) {
