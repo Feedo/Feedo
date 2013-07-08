@@ -275,7 +275,11 @@ var FeedItemMenuItemView = Backbone.View.extend({
       this.$el.find('.feed-abstract').fadeIn();
       
       // hide the main content
-      this.$el.find('.feed-content').fadeOut('fast');
+      this.$el.find('.feed-content').fadeOut('fast', function() {
+        // remove content
+        // this unloads flash etc, because the user is not viewing the YT video (e.g.) anymore
+        $(this).html('');
+      });
     }
     
     this.$el.smoothScrollTop();
