@@ -142,7 +142,7 @@
           
           <div class="feed-title">
             <a href="<%= link %>" target="_blank" data-external-link="true" title="Open link on original page">
-              <%= published %>: <%= title %>
+              <%= new Date(published).toLocaleString() %>: <%= title %>
             </a>
             
             <% if ( content ) { %>
