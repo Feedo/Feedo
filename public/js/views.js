@@ -219,13 +219,6 @@ var FeedItemMenuItemView = Backbone.View.extend({
       this.$el.removeClass("unread");
     }
     
-    // make links open in new tab
-    this.$el.find('.feed-content a').attr('target', '_blank').data('external-link', true);
-    // add alt text to images, if they have none
-    if ( !this.$el.find('.feed-content img').attr('alt') ) {
-      this.$el.find('.feed-content img').attr('alt', 'Image');
-    } 
-    
     return this;
   },
   
@@ -259,6 +252,13 @@ var FeedItemMenuItemView = Backbone.View.extend({
         
         // add the content as HTML (to load images, flash etc)
         this.$el.find('.feed-content').html(content);
+        
+        // make links open in new tab
+        this.$el.find('.feed-content a').attr('target', '_blank').data('external-link', true);
+        // add alt text to images, if they have none
+        if ( !this.$el.find('.feed-content img').attr('alt') ) {
+          this.$el.find('.feed-content img').attr('alt', 'Image');
+        }
       }
       
       // add 'open' class
