@@ -3,7 +3,7 @@ var PaginatedCollection = Backbone.Collection.extend({
     _.bindAll(this, 'parse', 'addNextPage');
     typeof(options) != 'undefined' || (options = {});
     this.page = 1;
-    typeof(this.perPage) != 'undefined' || (this.perPage = 10);
+    (this.perPage = 5);
   },
   fetch: function(options) {
     typeof(options) != 'undefined' || (options = {});
