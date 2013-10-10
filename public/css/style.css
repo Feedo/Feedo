@@ -18,6 +18,9 @@ body {
     background-color: rgb(225, 225, 225); /* really needed? */
     border-radius: 5px;
 }
+.feed-items-content-view {
+    overflow: auto;
+}
 .menu-item {
     padding: 3px;
     border: 1px solid #d7d7d7;
