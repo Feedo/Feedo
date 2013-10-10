@@ -66,19 +66,8 @@ var FeedMenuItemView = Backbone.View.extend({
   },
   
   showFeedItems: function() {
-    // save for later usage
-    var self = this;
-    
-    if ( !self.itemMenuView ) {
-      // create new view for feed items
-      self.itemMenuView = new FeedItemMenuView({
-        collection: self.model.get("items") // based on items from the model
-      });
-    }
-    // remove all buttons to avoid confusion (!!!)
-    $('#btn-next-page').remove();
-    self.itemMenuView.render(); // render to DOM
-    
+    console.log(this.model.id);
+    FeedoRouter.navigate("feed/" + this.model.id, {trigger: true});
     return false;
   },
   deleteFeed: function() {
