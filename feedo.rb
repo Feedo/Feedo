@@ -75,26 +75,23 @@ class Feedo < Sinatra::Base
     
     @@logger.info "Finished checking Feeds!"
   end
+
   
-  get '/' do
-    File.read(File.join('public', 'index.html'))
-  end
-  
-  get '/feeds/:id' do
+  get '/api/feeds/:id' do
     feed = Feed.find(params[:id])
     
     content_type :json
     feed.to_json
   end
   
-  get '/feeds' do
+  get '/api/feeds' do
     feeds = Feed.all
     
     content_type :json
     feeds.to_json
   end
   
-  post '/feeds' do
+  post '/api/feeds' do
     url = JSON.parse(request.body.read)["file_url"]
     
     return 400, {:message => "Please specify an URL!"}.to_json if url.nil? or url.empty? 
@@ -116,21 +113,21 @@ class Feedo < Sinatra::Base
     feed.to_json
   end
   
-  get '/feeds/:id/items' do    
+  get '/api/feeds/:id/items' do    
     feed_items = FeedItem.where(:feed_id => params[:id]).order("published DESC").paginate(:page => params[:page], :per_page => params[:perPage])
     
     content_type :json
     feed_items.to_json
   end
   
-  get '/feeds/:feed_id/items/:item_id' do
+  get '/api/feeds/:feed_id/items/:item_id' do
     feed_item = FeedItem.find(params[:item_id])
     puts feed_item.published
     content_type :json
     feed_item.to_json
   end
   
-  put '/feeds/:feed_id/items/:item_id' do
+  put '/api/feeds/:feed_id/items/:item_id' do
     data = JSON.parse(request.body.read)
     
     feed_item = FeedItem.find(params[:item_id])
@@ -143,15 +140,19 @@ class Feedo < Sinatra::Base
     feed_item.to_json
   end
   
-  get '/update_feeds' do
+  get '/api/update_feeds' do
     Feedo::update_feeds
     "updated"
   end
   
-  delete '/feeds/:id' do
+  delete '/api/feeds/:id' do
     Feed.destroy(params[:id])
     
     {}.to_json
+  end
+  
+  get '/*' do
+    File.read(File.join('public', 'index.html'))
   end
   
   not_found do
