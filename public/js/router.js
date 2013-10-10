@@ -1,3 +1,5 @@
+var APPNAME = "Feedo";
+
 var Router = Backbone.Router.extend({
   routes: {
     "": "main",
@@ -6,6 +8,7 @@ var Router = Backbone.Router.extend({
   
   main: function() {
     
+    document.title = APPNAME;
   },
   
   feed: function(id) {
@@ -20,6 +23,8 @@ var Router = Backbone.Router.extend({
       // remove all buttons to avoid confusion (!!!)
       $('#btn-next-page').remove();
       self.itemMenuView.render(); // render to DOM
+      
+      document.title = APPNAME + " - " + feed.get("title");
     });
     
   }
