@@ -296,7 +296,7 @@ var AppView = Backbone.View.extend({
     // add a indicator for progress
     $("#btn-refresh .icon-refresh").addClass("rotating");
     // make the server parse the feeds
-    $.get("/update_feeds", function(responseData) {
+    $.get("/api/update_feeds", function(responseData) {
       // something should have happened, let's see...
       self.refresh();
       

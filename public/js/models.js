@@ -7,12 +7,12 @@ var Feed = Backbone.RelationalModel.extend({
     collectionOptions: function(instance){ return {instance: instance}; }
   }],
   
-  urlRoot: "/feeds"
+  urlRoot: "/api/feeds"
 });
 
 var FeedCollection = Backbone.Collection.extend({
   model: Feed,
-  url: '/feeds',
+  url: '/api/feeds',
   
   comparator: function(feed) {
     return new Date(feed.get("id")).getTime();
@@ -33,10 +33,10 @@ var FeedItemCollection = PaginatedCollection.extend({
     var self = this;
     
     options.instance.bind("change", function() {
-      self.url = "/feeds/" + options.instance.id + "/items";
+      self.url = "/api/feeds/" + options.instance.id + "/items";
     });
     
-    self.url = "/feeds/" + options.instance.id + "/items";
+    self.url = "/api/feeds/" + options.instance.id + "/items";
     
     return PaginatedCollection.prototype.initialize.call(this)
   }
