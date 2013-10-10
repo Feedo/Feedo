@@ -7,15 +7,12 @@ var Router = Backbone.Router.extend({
   },
   
   main: function() {
-    
     document.title = APPNAME;
   },
   
   feed: function(id) {
-    console.log(id);
     var self = this;
     Feeds.fetch().done(function(){
-      var feed = Feeds.get(parseInt(id));
       var feed = Feeds.get(id);
       self.itemMenuView = new FeedItemMenuView({
         collection: feed.get("items") // based on items from the model
@@ -26,11 +23,11 @@ var Router = Backbone.Router.extend({
       
       document.title = APPNAME + " - " + feed.get("title");
     });
-    
   }
 });
 
 FeedoRouter = new Router;
 
 Backbone.history.start({
+  pushState: true
 });
