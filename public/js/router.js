@@ -13,6 +13,7 @@ var Router = Backbone.Router.extend({
     var self = this;
     Feeds.fetch().done(function(){
       var feed = Feeds.get(parseInt(id));
+      var feed = Feeds.get(id);
       self.itemMenuView = new FeedItemMenuView({
         collection: feed.get("items") // based on items from the model
       });
