@@ -3,14 +3,14 @@ var APPNAME = "Feedo";
 var Router = Backbone.Router.extend({
   routes: {
     "": "main",
-    "feed/:id": "feed"
+    "feed/:id-:name": "feed"
   },
   
   main: function() {
     document.title = APPNAME;
   },
   
-  feed: function(id) {
+  feed: function(id, name) {
     var self = this;
     Feeds.fetch().done(function(){
       var feed = Feeds.get(id);

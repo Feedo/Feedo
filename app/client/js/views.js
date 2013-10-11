@@ -67,7 +67,7 @@ var FeedMenuItemView = Backbone.View.extend({
   
   showFeedItems: function() {
     console.log(this.model.id);
-    FeedoRouter.navigate("feed/" + this.model.id, {trigger: true});
+    FeedoRouter.navigate("feed/" + this.model.id + "-" + this.model.get("title").toLowerCase(), {trigger: true});
     return false;
   },
   deleteFeed: function() {
