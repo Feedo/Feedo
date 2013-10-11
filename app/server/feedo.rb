@@ -11,7 +11,7 @@ require 'feedzirra'
 
 require 'json'
 
-Dir[File.join(".", "models/*.rb")].each do |f|
+Dir[File.join(".", "app", "server", "models/*.rb")].each do |f|
   require f
 end
 
@@ -32,6 +32,8 @@ class Feedo < Sinatra::Base
   end
   
   configure do
+    set :public_folder, 'app/client/'
+    
     @@scheduler = Rufus::Scheduler.start_new
     @@logger = Logger.new(STDOUT)
   
@@ -152,7 +154,7 @@ class Feedo < Sinatra::Base
   end
   
   get '/*' do
-    File.read(File.join('public', 'index.html'))
+    File.read(File.join('app', 'client', 'index.html'))
   end
   
   not_found do
