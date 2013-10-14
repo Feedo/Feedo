@@ -1,5 +1,5 @@
 require "sinatra/activerecord/rake"
-require './feedo'
+require './app/server/feedo'
 
 namespace :feedo do
   desc "Update all the feeds. Run this as a cronjob." 
