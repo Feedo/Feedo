@@ -153,6 +153,10 @@ class Feedo < Sinatra::Base
     {}.to_json
   end
   
+  get '/api/info' do
+    "FEEDO"
+  end
+  
   get '/*' do
     File.read(File.join('app', 'client', 'index.html'))
   end
