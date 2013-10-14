@@ -20,8 +20,8 @@ class Feedo < Sinatra::Base
   register Sinatra::ActiveRecordExtension
   register Sinatra::ConfigFile
   
-  config_file 'config/feedo.yml'
-  
+  config_file '../../config/feedo.yml'
+  set :database_file, '../../config/database.yml'
   
   def self.logger
     @@logger
