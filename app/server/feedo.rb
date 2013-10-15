@@ -115,6 +115,8 @@ class Feedo < Sinatra::Base
   post '/api/feeds' do
     url = JSON.parse(request.body.read)["file_url"]
     
+    content_type :json
+    
     return 400, {:message => "Please specify an URL!"}.to_json if url.nil? or url.empty? 
         
     return 409, {:message => "The Feed was already added."}.to_json if Feed.where(:file_url => url).exists?
@@ -130,7 +132,6 @@ class Feedo < Sinatra::Base
       @@logger.error "Invalid feed! #{e}"
       return 400, {:message => "The Feed seems to be invalid."}.to_json
     end
-    content_type :json
     feed.to_json
   end
   
