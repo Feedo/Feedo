@@ -59,13 +59,15 @@ class Feedo < Sinatra::Base
   
   def self.update_feeds
     @@logger.info "Starting to check the Feeds..."
-    
-    Feed.all.each do |feed|
+    i = 0
+    feeds = Feed.all
+    feeds.each do |feed|
       begin
         Feedo.logger.info "Checking #{feed.file_url}..."
         
         feed.update_feed
-        
+        yield i, feeds.size
+        i = i + 1
         Feedo.logger.info "Checked #{feed.file_url}"   
         
       rescue Exception => e
@@ -77,7 +79,24 @@ class Feedo < Sinatra::Base
     
     @@logger.info "Finished checking Feeds!"
   end
-
+  
+  def event_message(name, data)
+   "event: #{name}\ndata: #{data}\n\n"
+  end
+  
+  get '/api/update_feeds' do
+    content_type 'text/event-stream'
+    
+    stream do |out|
+      out << event_message("starting_update", {}.to_json)
+      
+      Feedo::update_feeds do |current, all|
+        out << event_message("feed_updated", {:progress => current + 1, :total => all}.to_json)
+      end
+      
+      out << event_message("updating_finished", {}.to_json)
+    end
+  end
   
   get '/api/feeds/:id' do
     feed = Feed.find(params[:id])
@@ -141,11 +160,6 @@ class Feedo < Sinatra::Base
     
     feed_item.save!
     feed_item.to_json
-  end
-  
-  get '/api/update_feeds' do
-    Feedo::update_feeds
-    "updated"
   end
   
   delete '/api/feeds/:id' do
