@@ -89,14 +89,12 @@ class Feedo < Sinatra::Base
     
     stream do |out|
       out << event_message("starting_update", {}.to_json)
-      out.flush
+
       Feedo::update_feeds do |current, all|
         out << event_message("feed_updated", {:progress => current + 1, :total => all}.to_json)
-        out.flush
       end
       
       out << event_message("updating_finished", {}.to_json)
-      out.flush
     end
   end
   
