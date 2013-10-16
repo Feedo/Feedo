@@ -136,7 +136,6 @@ class Feedo < Sinatra::Base
   end
   
   get '/api/feeds/:id/items' do
-    Feed.find(params[:id]).update_feed  
     feed_items = FeedItem.where(:feed_id => params[:id]).order("published DESC").paginate(:page => params[:page], :per_page => params[:perPage])
     
     content_type :json
