@@ -47,6 +47,8 @@ class Feedo < Sinatra::Base
     css :application, '/css/application.css', [
       '/css/*.css'
     ]
+    
+    prebuild true
   }
   
   def self.logger

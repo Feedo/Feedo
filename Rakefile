@@ -1,5 +1,9 @@
+APP_FILE  = 'feedo.rb'
+APP_CLASS = 'Feedo'
+
 require "sinatra/activerecord/rake"
-require './app/server/feedo'
+require './feedo'
+require 'sinatra/assetpack/rake'
 
 task(:environment) do
   env = ENV["RACK_ENV"] ? ENV["RACK_ENV"] : "development"
