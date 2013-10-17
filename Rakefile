@@ -16,3 +16,11 @@ namespace :feedo do
     Feedo.update_feeds
   end
 end
+
+namespace :assets do
+  desc "Precompile CSS and JS into public folder."
+  task :precompile do
+    Rake::Task["assetpack:build"].reenable
+    Rake::Task["assetpack:build"].invoke
+  end
+end
