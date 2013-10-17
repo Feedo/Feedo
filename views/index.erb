@@ -2,24 +2,11 @@
 <html>
   <head>
     <title>Feedo</title>
-    <script src="/js/libs/jquery-1.10.1.js"></script>
-    <script src="/js/libs/jquery.smoothScroll.js"></script>
-    <script src="/js/libs/json2.js"></script>
-    <script src="/js/libs/underscore.js"></script>
-    <script src="/js/libs/backbone.js"></script>
-    <script src="/js/libs/backbone-relational.js"></script>
-    <script src="/js/libs/backbone-paginated.js"></script>
-    <script src="/js/libs/bootstrap.min.js"></script>
-    <script src="/js/libs/spin.min.js"></script>
-    <script src="/js/libs/ladda.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap-responsive.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/ladda-themeless.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <%= css :application, :media => 'screen' %>
+    <%= js :libs %>
     
     <!-- Favicon reference -->
-    <link rel="shortcut icon" href="favicon.png" type="image/png">
+    <link rel="shortcut icon" href="img/favicon.png" type="image/png">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
@@ -121,12 +108,12 @@
     </div>
     
     <script type="text/template" id="feed-menu-item-template">
-      <div class="menu-item <% if(has_unread) { %>has-unread<%}%>" title="<%= description %>">
+      <div class="menu-item <%% if(has_unread) { %>has-unread<%%}%>" title="<%%= description %>">
         <div class="menu-item-inner">
           <a href="#">
-            <img class="feed-favicon" src="<%= favicon_url %>" alt="Favicon of <%= title %>" title="<%= title %>">
+            <img class="feed-favicon" src="<%%= favicon_url %>" alt="Favicon of <%%= title %>" title="<%%= title %>">
             <span>
-              <%= title %>
+              <%%= title %>
             </span>
             
             <div class="feed-delete">
@@ -141,19 +128,19 @@
         <div class="menu-item-inner">
           
           <div class="feed-title">
-            <a href="<%= link %>" target="_blank" data-external-link="true" title="Open link on original page">
-              <%= new Date(published).toLocaleString() %>: <%= title %>
+            <a href="<%%= link %>" target="_blank" data-external-link="true" title="Open link on original page">
+              <%%= new Date(published).toLocaleString() %>: <%%= title %>
             </a>
             
-            <% if ( content ) { %>
+            <%% if ( content ) { %>
             <div class="feed-abstract">
-              <% if (summary.length > 300) { %>
-                <%= $($.parseHTML(summary)).text().substr(0, 300) + "..." %>
-              <% } else { %>
-                <%= summary %>
-              <% } %>
+              <%% if (summary.length > 300) { %>
+                <%%= $($.parseHTML(summary)).text().substr(0, 300) + "..." %>
+              <%% } else { %>
+                <%%= summary %>
+              <%% } %>
             </div>
-            <% } %>
+            <%% } %>
           </div>
           
           <div class="feed-content"></div>
@@ -161,10 +148,8 @@
         </div>
       </div>
     </script>
+    <%= js :app %>
   
-    <script src="/js/models.js"></script>
-    <script src="/js/views.js"></script>
-    <script src="/js/router.js"></script>
   </body>
 
 </html>

@@ -1,2 +1,2 @@
-require './app/server/feedo'
+require './feedo'
 run Feedo

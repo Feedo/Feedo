@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'sinatra/activerecord'
 require 'sinatra/config_file'
+require 'sinatra/assetpack'
 
 require 'will_paginate'
 require 'will_paginate/active_record'
@@ -11,7 +12,7 @@ require 'feedzirra'
 
 require 'json'
 
-Dir[File.join(".", "app", "server", "models/*.rb")].each do |f|
+Dir[File.join(".", "models/*.rb")].each do |f|
   require f
 end
 
@@ -19,9 +20,34 @@ end
 class Feedo < Sinatra::Base
   register Sinatra::ActiveRecordExtension
   register Sinatra::ConfigFile
+  register Sinatra::AssetPack
   
-  config_file '../../config/feedo.yml'
-  set :database_file, '../../config/database.yml'
+  set :root, File.dirname(__FILE__)
+  
+  config_file 'config/feedo.yml'
+  set :database_file, 'config/database.yml'
+  
+  assets {
+    serve '/js', from: 'app/js'
+    serve '/css', from: 'app/css'
+    serve '/img', from: 'app/img'
+    
+    js :libs, '/js/libs.js', [
+      '/js/libs/underscore.js',      
+      '/js/libs/jquery-1.10.1.js',
+      '/js/libs/backbone.js',
+      '/js/libs/spin.min.js',
+      '/js/libs/*.js',
+    ]
+    
+    js :app, '/js/app.js', [
+      '/js/*.js'
+    ]
+    
+    css :application, '/css/application.css', [
+      '/css/*.css'
+    ]
+  }
   
   def self.logger
     @@logger
@@ -31,23 +57,27 @@ class Feedo < Sinatra::Base
     @@scheduler
   end
   
-  configure do
-    set :public_folder, 'app/client/'
-    
+  ActiveRecord::Base.logger.level = 1
+  
+  configure do    
     @@scheduler = Rufus::Scheduler.start_new
     @@logger = Logger.new(STDOUT)
   
     if settings.use_internal_scheduler then
       @@scheduler.every settings.scheduler_interval, :allow_overlapping => false do
         ActiveRecord::Base.verify_active_connections!
-        update_feeds
+        update_feeds do |progress, total|
+          
+        end
       end
     end
   
     ActiveRecord::Base.include_root_in_json = false
     
     @@scheduler.in "2s" do
-      update_feeds
+      update_feeds do |progress, total|
+          
+      end
     end
     
     if settings.auth_enabled then
@@ -173,7 +203,7 @@ class Feedo < Sinatra::Base
   end
   
   get '/*' do
-    File.read(File.join('app', 'client', 'index.html'))
+    erb :index
   end
   
   not_found do
