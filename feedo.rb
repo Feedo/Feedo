@@ -61,6 +61,19 @@ class Feedo < Sinatra::Base
   
   ActiveRecord::Base.logger.level = 1
   
+  helpers do
+    def protected!
+      return if authorized? or !settings.auth_enabled
+      headers['WWW-Authenticate'] = 'Baseic realm="Restricted Area"'
+      halt 401, "Not Authorized"
+    end
+    
+    def authorized?
+      @auth ||= Rack::Auth::Basic::Request.new(request.env)
+      @auth.provided? and @auth.basic? and @auth.credentials and @auth.credentials == [settings.auth_username, settings.auth_password]
+    end
+  end
+  
   configure do    
     @@scheduler = Rufus::Scheduler.start_new
     @@logger = Logger.new(STDOUT)
@@ -79,12 +92,6 @@ class Feedo < Sinatra::Base
     @@scheduler.in "2s" do
       update_feeds do |progress, total|
           
-      end
-    end
-    
-    if settings.auth_enabled then
-      use Rack::Auth::Basic, "Restricted Area" do |username, password|
-        username == settings.auth_username and password == settings.auth_password
       end
     end
   end
@@ -112,11 +119,13 @@ class Feedo < Sinatra::Base
     @@logger.info "Finished checking Feeds!"
   end
   
+  
   def event_message(name, data)
    "event: #{name}\ndata: #{data}\n\n"
   end
   
   get '/api/update_feeds' do
+    protected!
     content_type 'text/event-stream'
     
     stream do |out|
@@ -131,6 +140,7 @@ class Feedo < Sinatra::Base
   end
   
   get '/api/feeds/:id' do
+    protected!
     feed = Feed.find(params[:id])
     
     content_type :json
@@ -138,6 +148,7 @@ class Feedo < Sinatra::Base
   end
   
   get '/api/feeds' do
+    protected!
     feeds = Feed.all
     
     content_type :json
@@ -145,6 +156,7 @@ class Feedo < Sinatra::Base
   end
   
   post '/api/feeds' do
+    protected!
     url = JSON.parse(request.body.read)["file_url"]
     
     content_type :json
@@ -168,6 +180,7 @@ class Feedo < Sinatra::Base
   end
   
   get '/api/feeds/:id/items' do
+    protected!
     feed_items = FeedItem.where(:feed_id => params[:id]).order("published DESC").paginate(:page => params[:page], :per_page => params[:perPage])
     
     content_type :json
@@ -175,6 +188,7 @@ class Feedo < Sinatra::Base
   end
   
   get '/api/feeds/:feed_id/items/:item_id' do
+    protected!
     feed_item = FeedItem.find(params[:item_id])
     puts feed_item.published
     content_type :json
@@ -182,6 +196,7 @@ class Feedo < Sinatra::Base
   end
   
   put '/api/feeds/:feed_id/items/:item_id' do
+    protected!
     data = JSON.parse(request.body.read)
     
     feed_item = FeedItem.find(params[:item_id])
@@ -195,16 +210,19 @@ class Feedo < Sinatra::Base
   end
   
   delete '/api/feeds/:id' do
+    protected!
     Feed.destroy(params[:id])
     
     {}.to_json
   end
   
   get '/api/info' do
+    protected!
     "FEEDO"
   end
   
   get '/*' do
+    protected!
     erb :index
   end
   
